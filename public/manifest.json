@@ -1,0 +1,22 @@
+{
+    "name": "Laundry ProMax",
+    "short_name": "Laundry Pro",
+    "description": "Premium Laundry POS & Multi-Tenant Management SaaS",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#020617",
+    "theme_color": "#4f46e5",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "https://img.icons8.com/color/192/000000/washing-machine.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "https://img.icons8.com/color/512/000000/washing-machine.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}

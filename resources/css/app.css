@@ -1,0 +1,56 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
+
+@theme {
+    --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* KLIIN Premium Design Tokens — White + Gold + Navy Blue */
+    --color-navy: #1E3A5F;
+    --color-navy-light: #2A5082;
+    --color-navy-dark: #142A45;
+    --color-gold: #D4A853;
+    --color-gold-light: #E8C97A;
+    --color-gold-dark: #B8913A;
+    --color-surface: #FFFFFF;
+    --color-surface-alt: #F8F9FC;
+    --color-surface-hover: #F1F3F8;
+    --color-border: #E2E7EF;
+    --color-border-light: #EEF1F6;
+    --color-text-primary: #1A1D23;
+    --color-text-secondary: #4A5568;
+    --color-text-muted: #8896A6;
+}
+
+/* Custom scrollbar for premium feel */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-track {
+    background: #F1F3F8;
+}
+::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94A3B8;
+}
+
+/* Selection highlight */
+::selection {
+    background: rgba(30, 58, 95, 0.15);
+    color: #1E3A5F;
+}
+
+/* Print styles */
+@media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+}
