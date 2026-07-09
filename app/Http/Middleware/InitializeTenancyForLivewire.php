@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 
 class InitializeTenancyForLivewire
 {
@@ -22,7 +22,7 @@ class InitializeTenancyForLivewire
         
         // Only initialize tenancy if the current host is a tenant subdomain/domain
         if (!in_array($host, $centralDomains)) {
-            return app(InitializeTenancyByDomainOrSubdomain::class)->handle($request, $next);
+            return app(InitializeTenancyByDomain::class)->handle($request, $next);
         }
 
         return $next($request);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 // Livewire Pages
@@ -37,7 +37,7 @@ $isCentral = in_array($host, $centralDomains);
 if (app()->runningInConsole() || !$isCentral) {
     Route::middleware([
         'web',
-        InitializeTenancyByDomainOrSubdomain::class,
+        InitializeTenancyByDomain::class,
         PreventAccessFromCentralDomains::class,
     ])->group(function () {
 
