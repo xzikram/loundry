@@ -86,7 +86,8 @@ class RegisterPage extends Component
 
             // 3. Redirect to tenant subdomain login page
             $port = request()->getPort() ? ':' . request()->getPort() : '';
-            $loginUrl = 'http://' . $this->subdomain . '.' . $host . $port . '/login?email=' . urlencode($this->email);
+            $scheme = request()->getScheme();
+            $loginUrl = $scheme . '://' . $this->subdomain . '.' . $host . $port . '/login?email=' . urlencode($this->email);
             
             return redirect()->away($loginUrl);
 
