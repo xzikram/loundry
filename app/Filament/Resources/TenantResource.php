@@ -39,7 +39,7 @@ class TenantResource extends Resource
                 TextInput::make('id')
                     ->required()
                     ->disabled(fn (string $operation): bool => $operation !== 'create')
-                    ->unique(ignoringRecord: true)
+                    ->unique(ignoreRecord: true)
                     ->label('Tenant Domain ID (Subdomain)'),
                 TextInput::make('name')
                     ->required()
@@ -47,7 +47,7 @@ class TenantResource extends Resource
                 TextInput::make('slug')
                     ->required()
                     ->maxLength(255)
-                    ->unique(ignoringRecord: true)
+                    ->unique(ignoreRecord: true)
                     ->helperText('Used for routing URL (e.g. slug.kliin.id)'),
                 TextInput::make('email')
                     ->email()
