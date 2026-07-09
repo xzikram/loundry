@@ -74,9 +74,12 @@ class RegisterPage extends Component
                 $host = 'localhost';
             }
             
-            // Add primary subdomain mapping (e.g. demo.localhost)
+            $separator = ($host === 'localhost' || $host === '127.0.0.1') ? '.' : '-';
+            $tenantDomain = $this->subdomain . $separator . $host;
+
+            // Add primary subdomain mapping (e.g. demo.localhost or demo-clean.jarvisid.com)
             $tenant->domains()->create([
-                'domain' => $this->subdomain . '.' . $host,
+                'domain' => $tenantDomain,
             ]);
             
             // Add subdomain lookup mapping (needed by resolver for parsing)
@@ -87,7 +90,7 @@ class RegisterPage extends Component
             // 3. Redirect to tenant subdomain login page
             $port = request()->getPort() ? ':' . request()->getPort() : '';
             $scheme = request()->getScheme();
-            $loginUrl = $scheme . '://' . $this->subdomain . '.' . $host . $port . '/login?email=' . urlencode($this->email);
+            $loginUrl = $scheme . '://' . $tenantDomain . $port . '/login?email=' . urlencode($this->email);
             
             return redirect()->away($loginUrl);
 

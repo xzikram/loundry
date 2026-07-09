@@ -79,10 +79,10 @@
                         <input wire:model.live="subdomain" id="subdomain" type="text" required 
                             class="appearance-none block w-full min-w-0 flex-1 px-4 py-2.5 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] placeholder-[#8896A6] rounded-l-xl focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/10 focus:border-[#1E3A5F] text-sm transition-all" placeholder="barokah">
                         <span class="inline-flex items-center px-4 rounded-r-xl border border-l-0 border-[#E2E7EF] bg-[#F8F9FC] text-[#8896A6] text-xs font-semibold">
-                            .{{ request()->getHost() }}{{ request()->getPort() && !in_array(request()->getPort(), [80, 443]) ? ':' . request()->getPort() : '' }}
+                            {{ in_array(request()->getHost(), ['localhost', '127.0.0.1']) ? '.' : '-' }}{{ request()->getHost() }}{{ request()->getPort() && !in_array(request()->getPort(), [80, 443]) ? ':' . request()->getPort() : '' }}
                         </span>
                     </div>
-                    <p class="mt-1.5 text-[11px] text-[#8896A6]">Alamat akses toko Anda nantinya: <span class="font-bold text-[#1E3A5F]">{{ $subdomain ?: '...' }}.{{ request()->getHost() }}{{ request()->getPort() && !in_array(request()->getPort(), [80, 443]) ? ':' . request()->getPort() : '' }}</span></p>
+                    <p class="mt-1.5 text-[11px] text-[#8896A6]">Alamat akses toko Anda nantinya: <span class="font-bold text-[#1E3A5F]">{{ $subdomain ?: '...' }}{{ in_array(request()->getHost(), ['localhost', '127.0.0.1']) ? '.' : '-' }}{{ request()->getHost() }}{{ request()->getPort() && !in_array(request()->getPort(), [80, 443]) ? ':' . request()->getPort() : '' }}</span></p>
                     @error('subdomain') <p class="mt-2 text-xs text-rose-500">{{ $message }}</p> @enderror
                 </div>
 
