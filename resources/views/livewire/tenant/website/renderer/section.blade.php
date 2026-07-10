@@ -26,48 +26,128 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                 <div class="lg:col-span-7 space-y-6 text-left">
                     @if(isset($section->content['eyebrow']) && $section->content['eyebrow'])
-                        <span class="text-xs font-black uppercase tracking-widest block bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)]">
+                        <span class="inline-flex items-center px-4 py-1.5 border border-[var(--color-primary)]/15 text-xs font-black uppercase tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)]" style="border-radius: 999px; background-color: color-mix(in srgb, var(--color-primary) 5%, transparent);">
+                            <span class="h-1.5 w-1.5 rounded-full mr-2 animate-pulse" style="background-color: var(--color-accent);"></span>
                             {{ $section->content['eyebrow'] }}
                         </span>
                     @endif
                     
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight" style="color: var(--color-heading); font-family: '{{ $theme->heading_font ?? 'Outfit' }}', sans-serif;">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight" style="color: var(--color-heading); font-family: '{{ $theme->heading_font ?? 'Outfit' }}', sans-serif;">
                         {{ $section->content['title'] ?? 'Laundry Kilat Bersih' }}
                     </h1>
                     
-                    <p class="text-sm md:text-base leading-relaxed opacity-90 max-w-2xl font-medium">
+                    <p class="text-sm md:text-base leading-relaxed opacity-80 max-w-xl font-medium">
                         {{ $section->content['description'] ?? 'Tuliskan slogan utama outlet laundry Anda di sini.' }}
                     </p>
                     
-                    @if(isset($section->content['button_text']) && $section->content['button_text'])
-                        <div class="pt-3 flex flex-wrap gap-4">
-                            <a href="{{ $section->content['button_url'] ?? '#' }}" class="inline-block px-8 py-4 font-bold text-white text-xs tracking-wider uppercase shadow-lg shadow-[var(--color-primary)]/15 hover:shadow-xl hover:shadow-[var(--color-primary)]/20 -translate-y-0.5 hover:-translate-y-1 transition-all duration-300" style="background-color: var(--color-primary); border-radius: var(--border-radius);">
+                    <div class="pt-3 flex flex-wrap items-center gap-4">
+                        @if(isset($section->content['button_text']) && $section->content['button_text'])
+                            <a href="{{ $section->content['button_url'] ?? '#' }}" class="inline-flex items-center px-8 py-4 font-bold text-white text-xs tracking-wider uppercase shadow-lg shadow-[var(--color-primary)]/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300" style="background-color: var(--color-primary); border-radius: var(--border-radius);">
+                                <svg class="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.977 0c3.187.001 6.185 1.24 8.437 3.496 2.25 2.257 3.488 5.259 3.485 8.448-.006 6.625-5.343 11.973-11.928 11.973-2.01-.001-3.987-.508-5.746-1.472L0 24z"/></svg>
                                 {{ $section->content['button_text'] }}
                             </a>
-                        </div>
-                    @endif
+                        @endif
+                        <a href="#tracking" class="inline-flex items-center px-6 py-4 font-bold text-xs tracking-wider uppercase border-2 hover:bg-slate-50 transition-all duration-300" style="color: var(--color-primary); border-color: var(--color-primary); border-radius: var(--border-radius);">
+                            📦 Lacak Pesanan
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Hero Image Column -->
+                <!-- Hero Visual Column -->
                 <div class="lg:col-span-5 flex justify-center relative">
                     @if(isset($section->content['image_url']) && $section->content['image_url'])
                         <div class="relative group">
-                            <div class="absolute inset-0 bg-gradient-to-tr from-[var(--color-primary)]/20 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            <img src="{{ $section->content['image_url'] }}" alt="Hero Banner" class="max-w-full h-auto rounded-3xl shadow-2xl border border-slate-100/50 object-cover">
+                            <div class="absolute -inset-4 bg-gradient-to-tr from-[var(--color-primary)]/20 to-[var(--color-accent)]/10 rounded-[2rem] blur-2xl opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+                            <img src="{{ $section->content['image_url'] }}" alt="Hero Banner" class="relative max-w-full h-auto rounded-3xl shadow-2xl border border-slate-100/50 object-cover">
                         </div>
                     @else
-                        <!-- Premium illustration card layout -->
-                        <div class="w-full aspect-square bg-gradient-to-tr from-[var(--color-primary)] to-[var(--color-secondary)] rounded-3xl flex flex-col items-center justify-center text-white relative shadow-2xl overflow-hidden p-8 border border-white/10 group">
-                            <div class="absolute -right-16 -top-16 w-48 h-48 bg-white/5 rounded-full blur-2xl transition-transform group-hover:scale-110 duration-500"></div>
-                            <div class="absolute -left-16 -bottom-16 w-48 h-48 bg-white/5 rounded-full blur-2xl transition-transform group-hover:scale-110 duration-500"></div>
+                        <!-- Premium glassmorphic stats card -->
+                        <div class="w-full max-w-sm relative">
+                            <!-- Decorative blobs -->
+                            <div class="absolute -top-8 -left-8 w-32 h-32 rounded-full blur-3xl opacity-40" style="background-color: var(--color-primary);"></div>
+                            <div class="absolute -bottom-8 -right-8 w-40 h-40 rounded-full blur-3xl opacity-30" style="background-color: var(--color-accent);"></div>
                             
-                            <div class="z-10 text-center space-y-4">
-                                <div class="text-6xl animate-bounce duration-1000">👕</div>
-                                <h4 class="text-lg font-black tracking-widest uppercase">KLIIN LAUNDRY</h4>
-                                <p class="text-[11px] opacity-75 max-w-[200px] mx-auto leading-relaxed">Kebersihan terjamin, pakaian rapi, wangi premium tahan lama.</p>
+                            <!-- Main glassmorphic card -->
+                            <div class="relative bg-white/80 backdrop-blur-xl border border-white/60 rounded-3xl shadow-2xl p-8 space-y-6">
+                                <!-- Stats grid -->
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] p-5 rounded-2xl text-white text-center space-y-1 shadow-lg" style="box-shadow: 0 8px 30px color-mix(in srgb, var(--color-primary) 25%, transparent);">
+                                        <span class="text-2xl font-black">24</span>
+                                        <span class="text-[10px] uppercase tracking-widest font-bold block opacity-80">Jam Express</span>
+                                    </div>
+                                    <div class="bg-white border border-slate-100 p-5 rounded-2xl text-center space-y-1 shadow-sm">
+                                        <span class="text-2xl font-black" style="color: var(--color-accent);">5★</span>
+                                        <span class="text-[10px] uppercase tracking-widest font-bold block text-slate-400">Rating</span>
+                                    </div>
+                                    <div class="bg-white border border-slate-100 p-5 rounded-2xl text-center space-y-1 shadow-sm">
+                                        <span class="text-2xl font-black" style="color: var(--color-primary);">1K+</span>
+                                        <span class="text-[10px] uppercase tracking-widest font-bold block text-slate-400">Pelanggan</span>
+                                    </div>
+                                    <div class="bg-gradient-to-br from-[var(--color-accent)] to-amber-400 p-5 rounded-2xl text-white text-center space-y-1 shadow-lg">
+                                        <span class="text-2xl font-black">🧺</span>
+                                        <span class="text-[10px] uppercase tracking-widest font-bold block opacity-80">Gratis Antar</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Mini trust badge -->
+                                <div class="flex items-center justify-center space-x-2 pt-2">
+                                    <div class="flex -space-x-2">
+                                        <div class="h-7 w-7 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white flex items-center justify-center text-white text-[9px] font-bold">R</div>
+                                        <div class="h-7 w-7 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 border-2 border-white flex items-center justify-center text-white text-[9px] font-bold">S</div>
+                                        <div class="h-7 w-7 rounded-full bg-gradient-to-br from-green-400 to-green-600 border-2 border-white flex items-center justify-center text-white text-[9px] font-bold">B</div>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-slate-500">Dipercaya 1000+ pelanggan</span>
+                                </div>
                             </div>
                         </div>
                     @endif
+                </div>
+            </div>
+
+        <!-- TRACKING / ORDER SEARCH SECTION -->
+        @elseif($section->section_type === 'tracking')
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center space-y-4 mb-10">
+                    <h2 class="text-3xl md:text-4xl font-black tracking-tight" style="color: var(--color-heading); font-family: '{{ $theme->heading_font ?? 'Outfit' }}', sans-serif;">
+                        {{ $section->content['title'] ?? 'Lacak Pesanan Laundry Anda' }}
+                    </h2>
+                    <div class="h-1 w-12 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] mx-auto rounded-full"></div>
+                    <p class="text-xs md:text-sm font-medium opacity-80 max-w-lg mx-auto">
+                        {{ $section->content['description'] ?? 'Masukkan nomor invoice untuk melihat status terkini pesanan laundry Anda secara real-time.' }}
+                    </p>
+                </div>
+                
+                <div class="bg-[var(--color-surface)] border border-[#E2E7EF]/80 p-8 md:p-10 shadow-xl relative overflow-hidden" style="border-radius: calc(var(--border-radius) * 1.5);">
+                    <!-- Decorative accent -->
+                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-secondary)]"></div>
+                    
+                    <form onsubmit="event.preventDefault(); var inv = this.querySelector('input[name=invoice]').value; if(inv) window.location.href='/track/'+encodeURIComponent(inv);" class="space-y-5">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-1 relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 opacity-40" style="color: var(--color-primary);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                </div>
+                                <input name="invoice" type="text" placeholder="Masukkan nomor invoice (cth: INV-00001)" 
+                                    class="w-full pl-12 pr-4 py-4 border border-[#E2E7EF] bg-[var(--color-background)] text-[var(--color-heading)] placeholder-slate-400 text-sm font-medium focus:outline-none focus:ring-2 transition-all" style="border-radius: var(--border-radius); --tw-ring-color: var(--color-primary);">
+                            </div>
+                            <button type="submit" class="px-8 py-4 font-bold text-white text-xs tracking-wider uppercase shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 shrink-0" style="background-color: var(--color-primary); border-radius: var(--border-radius);">
+                                🔍 Lacak Sekarang
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Trust indicators -->
+                    <div class="flex flex-wrap items-center justify-center gap-6 mt-8 pt-6 border-t border-slate-100">
+                        <div class="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                            <span class="text-emerald-500">✓</span><span>Real-time Tracking</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                            <span class="text-emerald-500">✓</span><span>Notifikasi Status</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                            <span class="text-emerald-500">✓</span><span>Update Otomatis</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -287,6 +287,11 @@ class PageBuilder extends Component
                 'muted' => true,
                 'loop' => false,
             ];
+        } elseif ($type === 'tracking') {
+            $content = [
+                'title' => 'Lacak Pesanan Laundry Anda',
+                'description' => 'Masukkan nomor invoice untuk melihat status terkini pesanan laundry Anda secara real-time.',
+            ];
         }
 
         $section = LandingSection::create([

@@ -19,9 +19,7 @@
                 <img src="{{ $theme->custom_settings['header']['logo_url'] }}" style="max-width: {{ $theme->custom_settings['header']['logo_width'] ?? '120px' }};" class="h-auto transition-transform group-hover:scale-105 duration-300">
             @else
                 <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center shadow-md shadow-[var(--color-primary)]/10 transition-transform group-hover:scale-105 duration-300">
-                    <svg class="h-5 w-5 text-[var(--color-accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>
-                    </svg>
+                    <span class="text-white text-lg font-black">{{ strtoupper(substr($theme->custom_settings['header']['business_name'] ?? tenant('name') ?? 'L', 0, 1)) }}</span>
                 </div>
                 <span class="text-lg font-black tracking-tight uppercase bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] font-sans">
                     {{ $theme->custom_settings['header']['business_name'] ?? tenant('name') ?? 'Laundry Kami' }}

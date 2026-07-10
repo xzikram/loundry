@@ -270,6 +270,15 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        @elseif($sec->section_type === 'tracking')
+                                            <div class="space-y-3 text-center">
+                                                <h2 class="text-sm font-black" style="color: var(--color-heading);">{{ $sec->content['title'] ?? 'Lacak Pesanan' }}</h2>
+                                                <p class="text-[9px] opacity-80 font-medium">{{ $sec->content['description'] ?? '' }}</p>
+                                                <div class="flex gap-2 max-w-md mx-auto pt-1">
+                                                    <div class="flex-1 h-8 border rounded-lg flex items-center px-3 text-[9px] text-slate-400" style="border-color: #E2E7EF; border-radius: var(--border-radius);">🔍 Masukkan nomor invoice...</div>
+                                                    <div class="px-3 h-8 flex items-center text-[9px] font-bold text-white rounded-lg" style="background-color: var(--color-primary); border-radius: var(--border-radius);">Lacak</div>
+                                                </div>
+                                            </div>
                                         @elseif($sec->section_type === 'cta')
                                             <div class="p-5 bg-slate-50/50 border rounded-2xl text-center space-y-2.5" style="border-radius: var(--border-radius);">
                                                 <h2 class="text-sm font-black" style="color: var(--color-heading);">{{ $sec->content['title'] ?? 'Pesan Sekarang' }}</h2>
@@ -548,6 +557,18 @@
                                 <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500">Nomor WhatsApp</label>
                                 <input wire:model="editingContent.whatsapp_number" wire:keyup="updateSectionContent" type="text" placeholder="628..." class="w-full mt-1.5 px-4 py-2.5 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] rounded-xl text-xs focus:outline-none focus:border-[#1E3A5F]">
                             </div>
+                        @elseif($selectedSectionType === 'tracking')
+                            <div>
+                                <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500">Judul Section</label>
+                                <input wire:model="editingContent.title" wire:keyup="updateSectionContent" type="text" class="w-full mt-1.5 px-4 py-2.5 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] rounded-xl text-xs focus:outline-none focus:border-[#1E3A5F]">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500">Deskripsi Petunjuk</label>
+                                <textarea wire:model="editingContent.description" wire:keyup="updateSectionContent" rows="3" class="w-full mt-1.5 px-4 py-2.5 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] rounded-xl text-xs focus:outline-none focus:border-[#1E3A5F]"></textarea>
+                            </div>
+                            <div class="p-3 bg-emerald-50 border border-emerald-100 rounded-xl">
+                                <span class="text-[10px] font-bold text-emerald-700">✓ Section ini otomatis terhubung ke sistem tracking pesanan laundry Anda.</span>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -610,6 +631,12 @@
                     <button wire:click="addSection('location', 'location-01')" class="p-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-400 rounded-xl text-left transition-all">
                         <span class="block text-xs font-bold text-slate-800">📍 Lokasi & Kontak</span>
                         <span class="block text-[10px] text-slate-400 mt-1">Alamat outlet, telepon, jam buka.</span>
+                    </button>
+
+                    <!-- Tracking Section -->
+                    <button wire:click="addSection('tracking', 'tracking-01')" class="p-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-400 rounded-xl text-left transition-all">
+                        <span class="block text-xs font-bold text-slate-800">📦 Lacak Pesanan</span>
+                        <span class="block text-[10px] text-slate-400 mt-1">Form pencarian invoice pesanan pelanggan.</span>
                     </button>
 
                     <!-- CTA Section -->

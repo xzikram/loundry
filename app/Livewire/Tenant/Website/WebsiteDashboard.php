@@ -81,12 +81,31 @@ class WebsiteDashboard extends Component
             'visibility_devices' => ['desktop' => true, 'tablet' => true, 'mobile' => true],
         ]);
 
-        // 2. Services Section
+        // 2. Tracking / Order Search Section
+        \App\Models\Tenant\LandingSection::create([
+            'landing_page_id' => $pageId,
+            'section_type' => 'tracking',
+            'template_key' => 'tracking-01',
+            'sort_order' => 2,
+            'content' => [
+                'title' => 'Lacak Pesanan Laundry Anda',
+                'description' => 'Masukkan nomor invoice untuk melihat status terkini pesanan laundry Anda secara real-time.',
+            ],
+            'settings' => [
+                'bg_color' => '#F8F9FC',
+                'text_color' => '#1A1D23',
+                'padding_top' => 'medium',
+                'padding_bottom' => 'medium',
+            ],
+            'visibility_devices' => ['desktop' => true, 'tablet' => true, 'mobile' => true],
+        ]);
+
+        // 3. Services Section
         \App\Models\Tenant\LandingSection::create([
             'landing_page_id' => $pageId,
             'section_type' => 'services',
             'template_key' => 'services-01',
-            'sort_order' => 2,
+            'sort_order' => 3,
             'content' => [
                 'title' => 'Layanan Unggulan Kami',
                 'description' => 'Kami menyediakan berbagai jenis paket cuci strika terbaik untuk kebutuhan pakaian Anda.',
@@ -101,12 +120,12 @@ class WebsiteDashboard extends Component
             'visibility_devices' => ['desktop' => true, 'tablet' => true, 'mobile' => true],
         ]);
 
-        // 3. Pricing Section
+        // 4. Pricing Section
         \App\Models\Tenant\LandingSection::create([
             'landing_page_id' => $pageId,
             'section_type' => 'pricing',
             'template_key' => 'pricing-01',
-            'sort_order' => 3,
+            'sort_order' => 4,
             'content' => [
                 'title' => 'Daftar Harga Kiloan / Satuan',
                 'description' => 'Harga hemat bersahabat dengan jaminan kebersihan pakaian teruji.',
@@ -125,12 +144,12 @@ class WebsiteDashboard extends Component
             'visibility_devices' => ['desktop' => true, 'tablet' => true, 'mobile' => true],
         ]);
 
-        // 4. Testimonials Section
+        // 5. Testimonials Section
         \App\Models\Tenant\LandingSection::create([
             'landing_page_id' => $pageId,
             'section_type' => 'testimonials',
             'template_key' => 'testimonials-01',
-            'sort_order' => 4,
+            'sort_order' => 5,
             'content' => [
                 'title' => 'Apa Kata Pelanggan Kami?',
                 'description' => 'Testimoni jujur dari pelanggan setia yang telah menggunakan layanan laundry kami.',
@@ -148,12 +167,12 @@ class WebsiteDashboard extends Component
             'visibility_devices' => ['desktop' => true, 'tablet' => true, 'mobile' => true],
         ]);
 
-        // 5. FAQ Section
+        // 6. FAQ Section
         \App\Models\Tenant\LandingSection::create([
             'landing_page_id' => $pageId,
             'section_type' => 'faq',
             'template_key' => 'faq-01',
-            'sort_order' => 5,
+            'sort_order' => 6,
             'content' => [
                 'title' => 'Pertanyaan yang Sering Diajukan (FAQ)',
                 'items' => [
@@ -170,12 +189,12 @@ class WebsiteDashboard extends Component
             'visibility_devices' => ['desktop' => true, 'tablet' => true, 'mobile' => true],
         ]);
 
-        // 6. Location / Contact Section
+        // 7. Location / Contact Section
         \App\Models\Tenant\LandingSection::create([
             'landing_page_id' => $pageId,
             'section_type' => 'location',
             'template_key' => 'location-01',
-            'sort_order' => 6,
+            'sort_order' => 7,
             'content' => [
                 'title' => 'Lokasi Outlet & Hubungi Kami',
                 'address' => 'Jl. Kebangsaan Raya No. 45, Jakarta Selatan',
