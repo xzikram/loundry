@@ -1,56 +1,74 @@
 {{-- Sidebar Navigation Links (shared between desktop and mobile) --}}
-<a href="{{ route('tenant.dashboard') }}" class="group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tenant.dashboard') ? 'bg-[#1E3A5F]/5 text-[#1E3A5F] border border-[#1E3A5F]/15 shadow-sm' : 'text-[#4A5568] hover:bg-[#F8F9FC] hover:text-[#1A1D23] border border-transparent' }}">
-    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.dashboard') ? 'text-[#D4A853]' : 'text-[#8896A6] group-hover:text-[#4A5568]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+<a href="{{ route('tenant.dashboard') }}" class="group flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('tenant.dashboard') ? 'bg-gradient-to-r from-[#D4A853]/20 to-[#10B981]/10 text-[#E8C97A] border border-[#D4A853]/20 shadow-sm shadow-[#D4A853]/5' : 'text-slate-300 hover:bg-white/5 hover:text-white border border-transparent' }}">
+    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.dashboard') ? 'text-[#D4A853]' : 'text-slate-500 group-hover:text-[#D4A853]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
     Dashboard
 </a>
 
-<a href="{{ route('tenant.pos') }}" class="group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tenant.pos') ? 'bg-[#1E3A5F]/5 text-[#1E3A5F] border border-[#1E3A5F]/15 shadow-sm' : 'text-[#4A5568] hover:bg-[#F8F9FC] hover:text-[#1A1D23] border border-transparent' }}">
-    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.pos') ? 'text-[#D4A853]' : 'text-[#8896A6] group-hover:text-[#4A5568]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+<a href="{{ route('tenant.pos') }}" class="group flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('tenant.pos') ? 'bg-gradient-to-r from-[#D4A853]/20 to-[#10B981]/10 text-[#E8C97A] border border-[#D4A853]/20 shadow-sm shadow-[#D4A853]/5' : 'text-slate-300 hover:bg-white/5 hover:text-white border border-transparent' }}">
+    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.pos') ? 'text-[#10B981]' : 'text-slate-500 group-hover:text-[#10B981]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
     POS / Kasir
 </a>
 
-<a href="{{ route('tenant.orders') }}" class="group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tenant.orders*') ? 'bg-[#1E3A5F]/5 text-[#1E3A5F] border border-[#1E3A5F]/15 shadow-sm' : 'text-[#4A5568] hover:bg-[#F8F9FC] hover:text-[#1A1D23] border border-transparent' }}">
-    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.orders*') ? 'text-[#D4A853]' : 'text-[#8896A6] group-hover:text-[#4A5568]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+<a href="{{ route('tenant.orders') }}" class="group flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('tenant.orders*') ? 'bg-gradient-to-r from-[#D4A853]/20 to-[#10B981]/10 text-[#E8C97A] border border-[#D4A853]/20 shadow-sm shadow-[#D4A853]/5' : 'text-slate-300 hover:bg-white/5 hover:text-white border border-transparent' }}">
+    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.orders*') ? 'text-[#D4A853]' : 'text-slate-500 group-hover:text-[#D4A853]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
     Orders
 </a>
 
-<div class="pt-4 pb-2"><span class="px-4 text-[10px] font-bold text-[#8896A6] uppercase tracking-widest">Manajemen</span></div>
+<div class="pt-5 pb-2">
+    <div class="flex items-center px-4 space-x-2">
+        <div class="h-px flex-1 bg-gradient-to-r from-[#D4A853]/30 to-transparent"></div>
+        <span class="text-[9px] font-bold text-[#D4A853]/60 uppercase tracking-[0.2em]">Manajemen</span>
+        <div class="h-px flex-1 bg-gradient-to-l from-[#10B981]/30 to-transparent"></div>
+    </div>
+</div>
 
-<a href="{{ route('tenant.customers') }}" class="group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tenant.customers*') ? 'bg-[#1E3A5F]/5 text-[#1E3A5F] border border-[#1E3A5F]/15 shadow-sm' : 'text-[#4A5568] hover:bg-[#F8F9FC] hover:text-[#1A1D23] border border-transparent' }}">
-    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.customers*') ? 'text-[#D4A853]' : 'text-[#8896A6] group-hover:text-[#4A5568]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+<a href="{{ route('tenant.customers') }}" class="group flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('tenant.customers*') ? 'bg-gradient-to-r from-[#D4A853]/20 to-[#10B981]/10 text-[#E8C97A] border border-[#D4A853]/20 shadow-sm shadow-[#D4A853]/5' : 'text-slate-300 hover:bg-white/5 hover:text-white border border-transparent' }}">
+    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.customers*') ? 'text-[#10B981]' : 'text-slate-500 group-hover:text-[#10B981]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
     Pelanggan
 </a>
 
-<a href="{{ route('tenant.inventory') }}" class="group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tenant.inventory*') ? 'bg-[#1E3A5F]/5 text-[#1E3A5F] border border-[#1E3A5F]/15 shadow-sm' : 'text-[#4A5568] hover:bg-[#F8F9FC] hover:text-[#1A1D23] border border-transparent' }}">
-    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.inventory*') ? 'text-[#D4A853]' : 'text-[#8896A6] group-hover:text-[#4A5568]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+<a href="{{ route('tenant.inventory') }}" class="group flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('tenant.inventory*') ? 'bg-gradient-to-r from-[#D4A853]/20 to-[#10B981]/10 text-[#E8C97A] border border-[#D4A853]/20 shadow-sm shadow-[#D4A853]/5' : 'text-slate-300 hover:bg-white/5 hover:text-white border border-transparent' }}">
+    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.inventory*') ? 'text-[#D4A853]' : 'text-slate-500 group-hover:text-[#D4A853]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
     Inventaris
 </a>
 
-<a href="{{ route('tenant.expenses') }}" class="group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tenant.expenses*') ? 'bg-[#1E3A5F]/5 text-[#1E3A5F] border border-[#1E3A5F]/15 shadow-sm' : 'text-[#4A5568] hover:bg-[#F8F9FC] hover:text-[#1A1D23] border border-transparent' }}">
-    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.expenses*') ? 'text-[#D4A853]' : 'text-[#8896A6] group-hover:text-[#4A5568]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+<a href="{{ route('tenant.expenses') }}" class="group flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('tenant.expenses*') ? 'bg-gradient-to-r from-[#D4A853]/20 to-[#10B981]/10 text-[#E8C97A] border border-[#D4A853]/20 shadow-sm shadow-[#D4A853]/5' : 'text-slate-300 hover:bg-white/5 hover:text-white border border-transparent' }}">
+    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.expenses*') ? 'text-rose-400' : 'text-slate-500 group-hover:text-rose-400' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
     Pengeluaran
 </a>
 
-<a href="{{ route('tenant.staff') }}" class="group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tenant.staff*') ? 'bg-[#1E3A5F]/5 text-[#1E3A5F] border border-[#1E3A5F]/15 shadow-sm' : 'text-[#4A5568] hover:bg-[#F8F9FC] hover:text-[#1A1D23] border border-transparent' }}">
-    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.staff*') ? 'text-[#D4A853]' : 'text-[#8896A6] group-hover:text-[#4A5568]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+<a href="{{ route('tenant.staff') }}" class="group flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('tenant.staff*') ? 'bg-gradient-to-r from-[#D4A853]/20 to-[#10B981]/10 text-[#E8C97A] border border-[#D4A853]/20 shadow-sm shadow-[#D4A853]/5' : 'text-slate-300 hover:bg-white/5 hover:text-white border border-transparent' }}">
+    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.staff*') ? 'text-sky-400' : 'text-slate-500 group-hover:text-sky-400' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
     Staf
 </a>
 
-<div class="pt-4 pb-2"><span class="px-4 text-[10px] font-bold text-[#8896A6] uppercase tracking-widest">Website</span></div>
+<div class="pt-5 pb-2">
+    <div class="flex items-center px-4 space-x-2">
+        <div class="h-px flex-1 bg-gradient-to-r from-[#10B981]/30 to-transparent"></div>
+        <span class="text-[9px] font-bold text-[#10B981]/60 uppercase tracking-[0.2em]">Website</span>
+        <div class="h-px flex-1 bg-gradient-to-l from-[#D4A853]/30 to-transparent"></div>
+    </div>
+</div>
 
-<a href="{{ route('tenant.website.dashboard') }}" class="group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tenant.website*') ? 'bg-[#1E3A5F]/5 text-[#1E3A5F] border border-[#1E3A5F]/15 shadow-sm' : 'text-[#4A5568] hover:bg-[#F8F9FC] hover:text-[#1A1D23] border border-transparent' }}">
-    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.website*') ? 'text-[#D4A853]' : 'text-[#8896A6] group-hover:text-[#4A5568]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+<a href="{{ route('tenant.website.dashboard') }}" class="group flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('tenant.website*') ? 'bg-gradient-to-r from-[#D4A853]/20 to-[#10B981]/10 text-[#E8C97A] border border-[#D4A853]/20 shadow-sm shadow-[#D4A853]/5' : 'text-slate-300 hover:bg-white/5 hover:text-white border border-transparent' }}">
+    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.website*') ? 'text-violet-400' : 'text-slate-500 group-hover:text-violet-400' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
     Website Builder
 </a>
 
-<div class="pt-4 pb-2"><span class="px-4 text-[10px] font-bold text-[#8896A6] uppercase tracking-widest">Insight</span></div>
+<div class="pt-5 pb-2">
+    <div class="flex items-center px-4 space-x-2">
+        <div class="h-px flex-1 bg-gradient-to-r from-[#D4A853]/30 to-transparent"></div>
+        <span class="text-[9px] font-bold text-[#D4A853]/60 uppercase tracking-[0.2em]">Insight</span>
+        <div class="h-px flex-1 bg-gradient-to-l from-[#10B981]/30 to-transparent"></div>
+    </div>
+</div>
 
-<a href="{{ route('tenant.reports') }}" class="group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tenant.reports*') ? 'bg-[#1E3A5F]/5 text-[#1E3A5F] border border-[#1E3A5F]/15 shadow-sm' : 'text-[#4A5568] hover:bg-[#F8F9FC] hover:text-[#1A1D23] border border-transparent' }}">
-    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.reports*') ? 'text-[#D4A853]' : 'text-[#8896A6] group-hover:text-[#4A5568]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+<a href="{{ route('tenant.reports') }}" class="group flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('tenant.reports*') ? 'bg-gradient-to-r from-[#D4A853]/20 to-[#10B981]/10 text-[#E8C97A] border border-[#D4A853]/20 shadow-sm shadow-[#D4A853]/5' : 'text-slate-300 hover:bg-white/5 hover:text-white border border-transparent' }}">
+    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.reports*') ? 'text-amber-400' : 'text-slate-500 group-hover:text-amber-400' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
     Laporan
 </a>
 
-<a href="{{ route('tenant.settings') }}" class="group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tenant.settings*') ? 'bg-[#1E3A5F]/5 text-[#1E3A5F] border border-[#1E3A5F]/15 shadow-sm' : 'text-[#4A5568] hover:bg-[#F8F9FC] hover:text-[#1A1D23] border border-transparent' }}">
-    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.settings*') ? 'text-[#D4A853]' : 'text-[#8896A6] group-hover:text-[#4A5568]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+<a href="{{ route('tenant.settings') }}" class="group flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('tenant.settings*') ? 'bg-gradient-to-r from-[#D4A853]/20 to-[#10B981]/10 text-[#E8C97A] border border-[#D4A853]/20 shadow-sm shadow-[#D4A853]/5' : 'text-slate-300 hover:bg-white/5 hover:text-white border border-transparent' }}">
+    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.settings*') ? 'text-slate-300' : 'text-slate-500 group-hover:text-slate-300' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
     Pengaturan
 </a>
