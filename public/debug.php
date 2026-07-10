@@ -12,7 +12,7 @@ try {
     $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
     $request = Illuminate\Http\Request::capture();
     $app->instance('request', $request);
-    $app->bootstrap();
+    $kernel->bootstrap(); // Fix: Bootstrap using the Kernel instance
 
     echo "--- LARAVEL BOOTED SUCCESSFULLY ---\n\n";
     echo "Request Host: " . $request->getHost() . "\n";
