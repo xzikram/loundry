@@ -12,6 +12,18 @@
         font-family: '{{ $theme->body_font ?? 'Outfit' }}', sans-serif;
     " class="min-h-screen bg-[var(--color-background)] text-[var(--color-text)] flex flex-col justify-between">
         
+        @if(session()->has('error'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" class="fixed top-24 right-6 z-50 max-w-sm w-full bg-rose-50 border-l-4 border-rose-500 shadow-2xl p-4 rounded-r-xl transition-all duration-300" style="border-radius: 0 var(--border-radius) var(--border-radius) 0;">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-rose-500 text-lg">⚠️</span>
+                        <p class="text-xs font-bold text-rose-800">{{ session('error') }}</p>
+                    </div>
+                    <button @click="show = false" class="text-rose-400 hover:text-rose-600 text-xs font-bold">✕</button>
+                </div>
+            </div>
+        @endif
+
         <!-- Navbar Header -->
         @include('livewire.tenant.website.renderer.header')
 

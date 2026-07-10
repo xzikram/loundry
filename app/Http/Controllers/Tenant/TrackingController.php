@@ -7,6 +7,24 @@ use App\Models\Tenant\Order;
 
 class TrackingController extends Controller
 {
+    public function index()
+    {
+        $invoiceNumber = request()->query('invoice');
+        if ($invoiceNumber) {
+            $order = Order::with(['customer', 'statuses.user'])
+                ->where('invoice_number', $invoiceNumber)
+                ->first();
+
+            if ($order) {
+                return view('tracking.show', compact('order'));
+            }
+
+            return redirect()->back()->with('error', 'Invoice "' . $invoiceNumber . '" tidak ditemukan.');
+        }
+
+        return redirect()->route('tenant.landing');
+    }
+
     public function show(string $invoiceNumber)
     {
         $order = Order::with(['customer', 'statuses.user'])
@@ -14,7 +32,7 @@ class TrackingController extends Controller
             ->first();
 
         if (!$order) {
-            abort(404, 'Order laundry tidak ditemukan.');
+            return redirect()->route('tenant.landing')->with('error', 'Invoice "' . $invoiceNumber . '" tidak ditemukan.');
         }
 
         return view('tracking.show', compact('order'));

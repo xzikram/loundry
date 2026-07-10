@@ -44,7 +44,8 @@ if (app()->runningInConsole() || !$isCentral) {
     // Public Tenant Landing Page
     Route::get('/', \App\Livewire\Tenant\Auth\TenantLandingPage::class)->name('tenant.landing');
 
-    // Public Tracking Route
+    // Public Tracking Routes
+    Route::get('/track', [TrackingController::class, 'index'])->name('tenant.track.index');
     Route::get('/track/{invoice_number}', [TrackingController::class, 'show'])->name('tenant.track');
 
     Route::middleware('guest:tenant')->group(function () {

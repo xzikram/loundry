@@ -47,9 +47,31 @@
                                 {{ $section->content['button_text'] }}
                             </a>
                         @endif
-                        <a href="#tracking" class="inline-flex items-center px-6 py-4 font-bold text-xs tracking-wider uppercase border-2 hover:bg-slate-50 transition-all duration-300" style="color: var(--color-primary); border-color: var(--color-primary); border-radius: var(--border-radius);">
+                        <button onclick="document.getElementById('global-tracking-modal').classList.remove('hidden')" class="inline-flex items-center px-6 py-4 font-bold text-xs tracking-wider uppercase border-2 hover:bg-slate-50 transition-all duration-300 cursor-pointer" style="color: var(--color-primary); border-color: var(--color-primary); border-radius: var(--border-radius);">
                             📦 Lacak Pesanan
-                        </a>
+                        </button>
+                    </div>
+
+                    <!-- Global Tracking Modal (Lightweight modal using vanilla Tailwind/Alpine) -->
+                    <div id="global-tracking-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm">
+                        <div class="bg-white border border-[#E2E7EF] rounded-2xl max-w-md w-full overflow-hidden shadow-2xl relative" style="border-radius: calc(var(--border-radius) * 1.5);">
+                            <div class="p-6 border-b border-[#E2E7EF] flex justify-between items-center bg-[#F8F9FC]">
+                                <h3 class="text-sm font-black uppercase tracking-wider text-[#1E3A5F]">Lacak Status Laundry</h3>
+                                <button onclick="document.getElementById('global-tracking-modal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <p class="text-xs text-slate-500 font-medium leading-relaxed">Masukkan nomor invoice Anda untuk melacak progress cucian secara real-time.</p>
+                                <form action="/track" method="GET" class="space-y-4">
+                                    <div>
+                                        <input name="invoice" type="text" placeholder="Masukkan nomor invoice (cth: INV-00001)" required
+                                            class="w-full px-4 py-3 border border-[#E2E7EF] bg-slate-50 text-slate-800 placeholder-slate-400 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all" style="border-radius: var(--border-radius);">
+                                    </div>
+                                    <button type="submit" class="w-full py-3 font-bold text-white text-xs tracking-wider uppercase shadow-md transition-all duration-300 cursor-pointer" style="background-color: var(--color-primary); border-radius: var(--border-radius);">
+                                        🔍 Periksa Status
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -121,7 +143,7 @@
                     <!-- Decorative accent -->
                     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-secondary)]"></div>
                     
-                    <form onsubmit="event.preventDefault(); var inv = this.querySelector('input[name=invoice]').value; if(inv) window.location.href='/track/'+encodeURIComponent(inv);" class="space-y-5">
+                    <form action="/track" method="GET" class="space-y-5">
                         <div class="flex flex-col sm:flex-row gap-4">
                             <div class="flex-1 relative">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
