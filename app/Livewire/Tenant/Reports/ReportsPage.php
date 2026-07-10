@@ -52,10 +52,13 @@ class ReportsPage extends Component
             ->orderByDesc('period_spent')
             ->take(5)->get();
 
+        $driver = DB::connection()->getDriverName();
+        $daySql = $driver === 'sqlite' ? "CAST(strftime('%d', created_at) AS INTEGER) as day" : "DAY(created_at) as day";
+
         // Daily revenue chart
         $dailyRevenue = Order::whereYear('created_at', $year)->whereMonth('created_at', $month)
             ->where('payment_status', 'paid')
-            ->selectRaw('DAY(created_at) as day, SUM(total) as total')
+            ->selectRaw($daySql . ', SUM(total) as total')
             ->groupBy('day')->orderBy('day')->pluck('total', 'day')->toArray();
 
         return view('livewire.tenant.reports-page', compact(

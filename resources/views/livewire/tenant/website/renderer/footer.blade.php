@@ -68,6 +68,6 @@
 
     <!-- Copyright Bar -->
     <div class="max-w-6xl mx-auto border-t border-slate-900 mt-12 pt-8 text-center text-[10px] text-slate-600 font-bold uppercase tracking-wider">
-        <p>{!! $theme->custom_settings['footer']['copyright'] ?? '&copy; ' . date('Y') . ' ' . (tenant('name') ?? 'Laundry Kami') . '. All rights reserved.' !!}</p>
+        <p>{{ $theme->custom_settings['footer']['copyright'] ?? '© ' . date('Y') . ' ' . (tenant('name') ?? 'Laundry Kami') . '. All rights reserved.' }}</p>
     </div>
 </footer>

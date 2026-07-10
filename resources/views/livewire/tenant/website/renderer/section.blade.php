@@ -353,10 +353,17 @@
 
                 <!-- Google Map Embed Iframe -->
                 <div class="lg:col-span-7 overflow-hidden border border-[#E2E7EF]/85 shadow-xl rounded-3xl h-96 relative bg-slate-100">
-                    @if(isset($section->content['map_iframe']) && $section->content['map_iframe'])
-                        <div class="w-full h-full [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-none">
-                            {!! $section->content['map_iframe'] !!}
-                        </div>
+                            @php
+                                $mapIframe = trim($section->content['map_iframe'] ?? '');
+                                $isSafeIframe = preg_match('/^<iframe\s[^>]*src="https:\/\/(www\.)?google\.com\/maps\/embed\?[^"]+"[^>]*>\s*<\/iframe>$/i', $mapIframe);
+                            @endphp
+                            @if($isSafeIframe)
+                                {!! $mapIframe !!}
+                            @else
+                                <div class="absolute inset-0 flex items-center justify-center text-xs font-semibold text-rose-500 bg-rose-50 p-6 text-center">
+                                    Iframe peta tidak valid atau tidak aman (Hanya Google Maps resmi yang diizinkan).
+                                </div>
+                            @endif
                     @else
                         <div class="absolute inset-0 flex items-center justify-center text-xs font-semibold text-slate-400">
                             Peta Lokasi Outlet belum disematkan

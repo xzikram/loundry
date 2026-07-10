@@ -32,7 +32,11 @@ class SettingsPage extends Component
     {
         $this->validate([
             'laundryName' => 'required|string|max:255',
+            'laundryPhone' => 'nullable|string|max:20',
+            'laundryAddress' => 'nullable|string|max:1000',
+            'laundryEmail' => 'nullable|email|max:255',
             'taxRate' => 'required|numeric|min:0|max:100',
+            'currency' => 'required|string|size:3',
         ]);
 
         Setting::setValue('laundry_name', $this->laundryName);

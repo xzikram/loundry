@@ -82,37 +82,49 @@ class OrderRepository implements OrderRepositoryInterface
     {
         $today = now()->startOfDay();
 
+        // Single query to fetch total count, completed count and total revenue of today's orders
+        $totals = Order::where('created_at', '>=', $today)
+            ->selectRaw("
+                COUNT(*) as total_orders, 
+                SUM(CASE WHEN payment_status = 'paid' THEN total ELSE 0 END) as total_revenue,
+                SUM(CASE WHEN status = '" . OrderStatus::COMPLETED->value . "' THEN 1 ELSE 0 END) as total_completed
+            ")
+            ->first();
+
+        // Query count of all currently processing orders (regardless of creation date)
+        $processingCount = Order::whereIn('status', [
+            OrderStatus::PROCESSING, OrderStatus::WASHING, OrderStatus::DRYING, OrderStatus::IRONING, OrderStatus::PACKING
+        ])->count();
+
         return [
-            'revenue' => (float) Order::where('created_at', '>=', $today)
-                ->where('payment_status', 'paid')
-                ->sum('total'),
-            'orders' => Order::where('created_at', '>=', $today)->count(),
-            'processing' => Order::whereIn('status', [
-                OrderStatus::PROCESSING, OrderStatus::WASHING, OrderStatus::DRYING, OrderStatus::IRONING, OrderStatus::PACKING
-            ])->count(),
-            'completed' => Order::where('status', OrderStatus::COMPLETED)
-                ->where('created_at', '>=', $today)
-                ->count(),
+            'revenue' => (float) ($totals->total_revenue ?? 0.00),
+            'orders' => (int) ($totals->total_orders ?? 0),
+            'processing' => $processingCount,
+            'completed' => (int) ($totals->total_completed ?? 0),
         ];
     }
 
     public function getRevenueChartData(string $period): array
     {
-        // Sample static return representation, usually DB query group by date
+        $startDate = now()->subDays(6)->startOfDay();
+        
+        // Single query grouping revenue by date to prevent N+1 query loop
+        $rawTotals = Order::where('created_at', '>=', $startDate)
+            ->where('payment_status', 'paid')
+            ->selectRaw('DATE(created_at) as date_only, SUM(total) as total')
+            ->groupBy('date_only')
+            ->pluck('total', 'date_only')
+            ->toArray();
+
         $days = collect(range(6, 0))->map(fn($day) => now()->subDays($day)->format('Y-m-d'));
         
-        $data = $days->map(function ($date) {
-            return [
-                'date' => $date,
-                'total' => (float) Order::whereDate('created_at', $date)
-                    ->where('payment_status', 'paid')
-                    ->sum('total')
-            ];
-        });
+        $values = $days->map(function ($date) use ($rawTotals) {
+            return (float) ($rawTotals[$date] ?? 0.00);
+        })->toArray();
 
         return [
             'labels' => $days->map(fn($date) => date('D', strtotime($date)))->toArray(),
-            'values' => $data->pluck('total')->toArray()
+            'values' => $values
         ];
     }
 }

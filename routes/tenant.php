@@ -59,30 +59,30 @@ if (app()->runningInConsole() || !$isCentral) {
         ])->group(function () {
 
             // Core
-            Route::get('/dashboard', DashboardPage::class)->name('tenant.dashboard');
-            Route::get('/pos', PosBillingPage::class)->name('tenant.pos');
-            Route::get('/orders', OrderListPage::class)->name('tenant.orders');
-            Route::get('/orders/{id}', OrderDetailPage::class)->name('tenant.order-details');
-            Route::get('/orders/{id}/print', PrintPreviewPage::class)->name('tenant.orders.print');
+            Route::get('/dashboard', DashboardPage::class)->name('tenant.dashboard')->middleware('can:view-dashboard');
+            Route::get('/pos', PosBillingPage::class)->name('tenant.pos')->middleware('can:create-order');
+            Route::get('/orders', OrderListPage::class)->name('tenant.orders')->middleware('can:view-orders');
+            Route::get('/orders/{id}', OrderDetailPage::class)->name('tenant.order-details')->middleware('can:view-orders');
+            Route::get('/orders/{id}/print', PrintPreviewPage::class)->name('tenant.orders.print')->middleware('can:view-orders');
 
             // Management
-            Route::get('/customers', CustomerListPage::class)->name('tenant.customers');
-            Route::get('/inventory', InventoryPage::class)->name('tenant.inventory');
-            Route::get('/expenses', ExpensePage::class)->name('tenant.expenses');
-            Route::get('/staff', StaffPage::class)->name('tenant.staff');
+            Route::get('/customers', CustomerListPage::class)->name('tenant.customers')->middleware('can:manage-customers');
+            Route::get('/inventory', InventoryPage::class)->name('tenant.inventory')->middleware('can:view-inventory');
+            Route::get('/expenses', ExpensePage::class)->name('tenant.expenses')->middleware('can:manage-expenses');
+            Route::get('/staff', StaffPage::class)->name('tenant.staff')->middleware('can:manage-staff');
 
             // Insight
-            Route::get('/reports', ReportsPage::class)->name('tenant.reports');
-            Route::get('/settings', SettingsPage::class)->name('tenant.settings');
+            Route::get('/reports', ReportsPage::class)->name('tenant.reports')->middleware('can:manage-outlet-settings');
+            Route::get('/settings', SettingsPage::class)->name('tenant.settings')->middleware('can:manage-outlet-settings');
 
             // Website Builder Module
-            Route::get('/website', \App\Livewire\Tenant\Website\WebsiteDashboard::class)->name('tenant.website.dashboard');
-            Route::get('/website/pages', \App\Livewire\Tenant\Website\PageList::class)->name('tenant.website.pages');
-            Route::get('/website/builder/{id}', \App\Livewire\Tenant\Website\PageBuilder::class)->name('tenant.website.builder');
-            Route::get('/website/media', \App\Livewire\Tenant\Website\MediaLibraryPage::class)->name('tenant.website.media');
-            Route::get('/website/popups', \App\Livewire\Tenant\Website\PopupCampaignsPage::class)->name('tenant.website.popups');
-            Route::get('/website/navigation', \App\Livewire\Tenant\Website\NavigationBuilderPage::class)->name('tenant.website.navigation');
-            Route::get('/website/theme', \App\Livewire\Tenant\Website\ThemeSettingsPage::class)->name('tenant.website.theme');
+            Route::get('/website', \App\Livewire\Tenant\Website\WebsiteDashboard::class)->name('tenant.website.dashboard')->middleware('can:manage-outlet-settings');
+            Route::get('/website/pages', \App\Livewire\Tenant\Website\PageList::class)->name('tenant.website.pages')->middleware('can:manage-outlet-settings');
+            Route::get('/website/builder/{id}', \App\Livewire\Tenant\Website\PageBuilder::class)->name('tenant.website.builder')->middleware('can:manage-outlet-settings');
+            Route::get('/website/media', \App\Livewire\Tenant\Website\MediaLibraryPage::class)->name('tenant.website.media')->middleware('can:manage-outlet-settings');
+            Route::get('/website/popups', \App\Livewire\Tenant\Website\PopupCampaignsPage::class)->name('tenant.website.popups')->middleware('can:manage-outlet-settings');
+            Route::get('/website/navigation', \App\Livewire\Tenant\Website\NavigationBuilderPage::class)->name('tenant.website.navigation')->middleware('can:manage-outlet-settings');
+            Route::get('/website/theme', \App\Livewire\Tenant\Website\ThemeSettingsPage::class)->name('tenant.website.theme')->middleware('can:manage-outlet-settings');
 
             // Logout
             Route::post('/logout', function () {

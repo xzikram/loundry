@@ -308,7 +308,8 @@ class PosBillingPage extends Component
 
     public function getTaxProperty(): float
     {
-        return $this->getSubtotal() * 0.11; // 11% Tax
+        $rate = (float) \App\Models\Tenant\Setting::getValue('tax_rate', 11);
+        return $this->getSubtotal() * ($rate / 100);
     }
 
     public function getTotalProperty(): float
@@ -629,7 +630,7 @@ class PosBillingPage extends Component
                             <span>Rp {{ number_format($this->getSubtotal(), 0, ',', '.') }}</span>
                         </div>
                         <div class="flex justify-between text-[#8896A6]">
-                            <span>Pajak (11%)</span>
+                            <span>Pajak ({{ (float) \App\Models\Tenant\Setting::getValue('tax_rate', 11) }}%)</span>
                             <span>Rp {{ number_format($this->getTax(), 0, ',', '.') }}</span>
                         </div>
                         <div class="flex justify-between text-[#1A1D23] text-base font-bold border-t border-[#E2E7EF]/50 pt-2.5">
