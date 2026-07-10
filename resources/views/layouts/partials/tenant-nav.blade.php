@@ -36,6 +36,13 @@
     Staf
 </a>
 
+<div class="pt-4 pb-2"><span class="px-4 text-[10px] font-bold text-[#8896A6] uppercase tracking-widest">Website</span></div>
+
+<a href="{{ route('tenant.website.dashboard') }}" class="group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tenant.website*') ? 'bg-[#1E3A5F]/5 text-[#1E3A5F] border border-[#1E3A5F]/15 shadow-sm' : 'text-[#4A5568] hover:bg-[#F8F9FC] hover:text-[#1A1D23] border border-transparent' }}">
+    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.website*') ? 'text-[#D4A853]' : 'text-[#8896A6] group-hover:text-[#4A5568]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+    Website Builder
+</a>
+
 <div class="pt-4 pb-2"><span class="px-4 text-[10px] font-bold text-[#8896A6] uppercase tracking-widest">Insight</span></div>
 
 <a href="{{ route('tenant.reports') }}" class="group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tenant.reports*') ? 'bg-[#1E3A5F]/5 text-[#1E3A5F] border border-[#1E3A5F]/15 shadow-sm' : 'text-[#4A5568] hover:bg-[#F8F9FC] hover:text-[#1A1D23] border border-transparent' }}">

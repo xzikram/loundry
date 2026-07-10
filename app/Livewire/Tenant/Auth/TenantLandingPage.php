@@ -24,22 +24,40 @@ class TenantLandingPage extends Component
     // Tracking state
     public string $invoiceNumber = '';
 
+    // Dynamic Page states
+    public ?\App\Models\Tenant\LandingPage $dynamicPage = null;
+    public $sections = [];
+    public $theme = null;
+
     public function mount()
     {
-        $this->laundryName = Setting::getValue('laundry_name', 'KLIIN Laundry');
-        $this->laundryPhone = Setting::getValue('laundry_phone', '');
-        $this->laundryAddress = Setting::getValue('laundry_address', '');
-        $this->laundryEmail = Setting::getValue('laundry_email', '');
-        
-        $this->outlet = Outlet::first();
-        if ($this->outlet) {
-            if (empty($this->laundryName)) $this->laundryName = $this->outlet->name;
-            if (empty($this->laundryPhone)) $this->laundryPhone = $this->outlet->phone;
-            if (empty($this->laundryAddress)) $this->laundryAddress = $this->outlet->address;
-        }
+        // Check for active published homepage
+        $this->dynamicPage = \App\Models\Tenant\LandingPage::where('is_homepage', true)
+            ->where('status', 'published')
+            ->first();
 
-        $this->categories = ServiceCategory::with('services')->where('is_active', true)->get();
-        $this->services = Service::with('prices')->where('is_active', true)->take(8)->get();
+        if ($this->dynamicPage) {
+            $this->sections = \App\Models\Tenant\LandingSection::where('landing_page_id', $this->dynamicPage->id)
+                ->where('is_visible', true)
+                ->orderBy('sort_order')
+                ->get();
+            $this->theme = \App\Models\Tenant\LandingThemeSetting::getSettings();
+        } else {
+            $this->laundryName = Setting::getValue('laundry_name', 'KLIIN Laundry');
+            $this->laundryPhone = Setting::getValue('laundry_phone', '');
+            $this->laundryAddress = Setting::getValue('laundry_address', '');
+            $this->laundryEmail = Setting::getValue('laundry_email', '');
+            
+            $this->outlet = Outlet::first();
+            if ($this->outlet) {
+                if (empty($this->laundryName)) $this->laundryName = $this->outlet->name;
+                if (empty($this->laundryPhone)) $this->laundryPhone = $this->outlet->phone;
+                if (empty($this->laundryAddress)) $this->laundryAddress = $this->outlet->address;
+            }
+
+            $this->categories = ServiceCategory::with('services')->where('is_active', true)->get();
+            $this->services = Service::with('prices')->where('is_active', true)->take(8)->get();
+        }
     }
 
     public function track()
