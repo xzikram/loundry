@@ -15,6 +15,53 @@ class LoginPage extends Component
     public string $password = '';
     public bool $remember = false;
 
+    public function mount()
+    {
+        $ssoToken = request()->query('sso_token');
+        if ($ssoToken) {
+            $centralUser = tenancy()->central(function () use ($ssoToken) {
+                return \App\Models\Central\CentralUser::where('sso_token', $ssoToken)
+                    ->where('sso_token_expires_at', '>', now())
+                    ->first();
+            });
+
+            if ($centralUser) {
+                // Find matching active tenant user in this tenant database
+                $tenantUser = \App\Models\Tenant\User::where('email', $centralUser->email)
+                    ->where('is_active', true)
+                    ->first();
+
+                if ($tenantUser) {
+                    // Log in via tenant guard
+                    \Illuminate\Support\Facades\Auth::guard('tenant')->login($tenantUser, true);
+                    request()->session()->regenerate();
+
+                    // Clear token
+                    tenancy()->central(function () use ($centralUser) {
+                        $centralUser->update([
+                            'sso_token' => null,
+                            'sso_token_expires_at' => null,
+                        ]);
+                    });
+
+                    // Log activity
+                    \App\Models\Tenant\ActivityLog::create([
+                        'description' => 'User logged in via SSO',
+                        'causer_id' => $tenantUser->id,
+                        'properties' => [
+                            'ip' => request()->ip(),
+                            'user_agent' => request()->userAgent(),
+                        ],
+                    ]);
+
+                    return redirect()->intended(route('tenant.dashboard'));
+                }
+            }
+        }
+
+        $this->email = request()->query('email', '');
+    }
+
     protected array $rules = [
         'email' => 'required|email',
         'password' => 'required|string',

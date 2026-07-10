@@ -61,7 +61,7 @@
                     }
                     
                     $scheme = request()->getScheme();
-                    $tenantUrl = $scheme . '://' . $tenantDomain . '/login?email=' . urlencode($user->email);
+                    $tenantUrl = $scheme . '://' . $tenantDomain . '/login?email=' . urlencode($user->email) . '&sso_token=' . $ssoToken;
                 @endphp
                 <a href="{{ $tenantUrl }}" class="block text-left p-5 rounded-xl border border-[#E2E7EF] bg-white hover:bg-[#F8F9FC] hover:border-[#D4A853]/30 hover:shadow-lg transition-all group">
                     <div class="flex items-center space-x-3">

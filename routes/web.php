@@ -22,12 +22,20 @@ Route::get('/admin/login', function () {
 Route::middleware('auth')->get('/login/chooser', function () {
     $user = auth()->user();
     
+    // Generate secure temporary SSO token
+    $ssoToken = \Illuminate\Support\Str::random(60);
+    $user->update([
+        'sso_token' => $ssoToken,
+        'sso_token_expires_at' => now()->addMinutes(5),
+    ]);
+    
     // Find associated tenant
     $tenant = \App\Models\Central\Tenant::where('email', $user->email)->first();
     $subdomain = $tenant ? $tenant->id : '';
 
     return view('auth.chooser', [
         'user' => $user,
-        'subdomain' => $subdomain
+        'subdomain' => $subdomain,
+        'ssoToken' => $ssoToken
     ]);
 })->name('login.chooser');

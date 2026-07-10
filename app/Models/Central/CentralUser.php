@@ -28,6 +28,8 @@ class CentralUser extends Authenticatable implements FilamentUser
         'is_active',
         'two_factor_secret',
         'two_factor_confirmed_at',
+        'sso_token',
+        'sso_token_expires_at',
     ];
 
     protected $hidden = [
@@ -44,6 +46,7 @@ class CentralUser extends Authenticatable implements FilamentUser
             'password' => 'hashed',
             'role' => UserRole::class,
             'is_active' => 'boolean',
+            'sso_token_expires_at' => 'datetime',
         ];
     }
 }
