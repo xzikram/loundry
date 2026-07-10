@@ -288,6 +288,45 @@
                     </a>
                 </div>
             </div>
+        @elseif($section->section_type === 'video')
+            <div class="text-center space-y-4 max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight" style="color: var(--color-heading); font-family: '{{ $theme->heading_font ?? 'Outfit' }}', sans-serif;">
+                    {{ $section->content['title'] ?? 'Video Profil Kami' }}
+                </h2>
+                <div class="h-1 w-12 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] mx-auto rounded-full"></div>
+            </div>
+
+            <div class="max-w-4xl mx-auto overflow-hidden border border-[#E2E7EF]/80 shadow-2xl rounded-3xl bg-slate-950 aspect-video relative">
+                @if(($section->content['video_type'] ?? 'youtube') === 'youtube')
+                    @php
+                        $youtubeUrl = $section->content['youtube_url'] ?? '';
+                        $videoId = '';
+                        if (preg_match('/embed\/([a-zA-Z0-9_-]+)/', $youtubeUrl, $matches)) {
+                            $videoId = $matches[1];
+                        } elseif (preg_match('/v=([a-zA-Z0-9_-]+)/', $youtubeUrl, $matches)) {
+                            $videoId = $matches[1];
+                        } elseif (preg_match('/youtu\.be\/([a-zA-Z0-9_-]+)/', $youtubeUrl, $matches)) {
+                            $videoId = $matches[1];
+                        } elseif (preg_match('/shorts\/([a-zA-Z0-9_-]+)/', $youtubeUrl, $matches)) {
+                            $videoId = $matches[1];
+                        }
+                    @endphp
+                    @if($videoId)
+                        <iframe class="w-full h-full border-none" src="https://www.youtube.com/embed/{{ $videoId }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    @else
+                        <div class="w-full h-full flex items-center justify-center text-xs text-slate-500">Tautan video YouTube tidak valid</div>
+                    @endif
+                @else
+                    @if(isset($section->content['video_url']) && $section->content['video_url'])
+                        <video class="w-full h-full object-cover" controls>
+                            <source src="{{ $section->content['video_url'] }}" type="video/mp4">
+                            Browser Anda tidak mendukung pemutaran video.
+                        </video>
+                    @else
+                        <div class="w-full h-full flex items-center justify-center text-xs text-slate-500">Video belum diunggah</div>
+                    @endif
+                @endif
+            </div>
         @endif
 
     </div>

@@ -48,6 +48,35 @@ class PageBuilder extends Component
 
     public function selectSection(int $id)
     {
+        if ($id === 0) {
+            $this->selectedSectionId = 0;
+            $this->selectedSectionType = 'header';
+            $this->editingContent = $this->theme->custom_settings['header'] ?? [
+                'logo_url' => '',
+                'logo_width' => '120px',
+                'business_name' => tenant('name') ?? 'Laundry',
+                'sticky' => false,
+                'cta_text' => 'Hubungi Kami',
+                'cta_url' => '#location',
+            ];
+            $this->editingSettings = [];
+            $this->saveStatus = 'Saved';
+            return;
+        }
+
+        if ($id === -1) {
+            $this->selectedSectionId = -1;
+            $this->selectedSectionType = 'footer';
+            $this->editingContent = $this->theme->custom_settings['footer'] ?? [
+                'logo_url' => '',
+                'description' => 'Layanan laundry premium terbaik.',
+                'copyright' => '&copy; ' . date('Y') . ' ' . (tenant('name') ?? 'Laundry') . '. All rights reserved.',
+            ];
+            $this->editingSettings = [];
+            $this->saveStatus = 'Saved';
+            return;
+        }
+
         $section = LandingSection::findOrFail($id);
         $this->selectedSectionId = $section->id;
         $this->selectedSectionType = $section->section_type;
@@ -60,6 +89,22 @@ class PageBuilder extends Component
     {
         $this->saveStatus = 'Saving...';
         
+        if ($this->selectedSectionId === 0) {
+            $customSettings = $this->theme->custom_settings ?? [];
+            $customSettings['header'] = $this->editingContent;
+            $this->theme->update(['custom_settings' => $customSettings]);
+            $this->saveStatus = 'Saved';
+            return;
+        }
+
+        if ($this->selectedSectionId === -1) {
+            $customSettings = $this->theme->custom_settings ?? [];
+            $customSettings['footer'] = $this->editingContent;
+            $this->theme->update(['custom_settings' => $customSettings]);
+            $this->saveStatus = 'Saved';
+            return;
+        }
+
         if ($this->selectedSectionId) {
             $section = LandingSection::findOrFail($this->selectedSectionId);
             $section->update([
@@ -74,7 +119,7 @@ class PageBuilder extends Component
     {
         $this->saveStatus = 'Saving...';
 
-        if ($this->selectedSectionId) {
+        if ($this->selectedSectionId && $this->selectedSectionId !== 0 && $this->selectedSectionId !== -1) {
             $section = LandingSection::findOrFail($this->selectedSectionId);
             $section->update([
                 'settings' => $this->editingSettings,
@@ -231,6 +276,16 @@ class PageBuilder extends Component
                 'button_text' => 'Pesan Lewat WhatsApp',
                 'whatsapp_number' => '',
                 'whatsapp_message' => 'Halo, saya mau memesan laundry antar jemput.',
+            ];
+        } elseif ($type === 'video') {
+            $content = [
+                'title' => 'Video Review / Profil Laundry Kami',
+                'video_type' => 'youtube', // youtube, direct
+                'youtube_url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                'video_url' => '',
+                'autoplay' => false,
+                'muted' => true,
+                'loop' => false,
             ];
         }
 

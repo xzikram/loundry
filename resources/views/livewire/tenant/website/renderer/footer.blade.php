@@ -11,11 +11,18 @@
         
         <!-- About/Brand column -->
         <div class="md:col-span-4 space-y-4">
-            <h3 class="text-white text-lg font-black tracking-tight uppercase">
-                {{ tenant('name') ?? 'Laundry Kami' }}
-            </h3>
+            @php
+                $theme = \App\Models\Tenant\LandingThemeSetting::getSettings();
+            @endphp
+            @if(isset($theme->custom_settings['footer']['logo_url']) && $theme->custom_settings['footer']['logo_url'])
+                <img src="{{ $theme->custom_settings['footer']['logo_url'] }}" class="h-8 opacity-80 mb-2">
+            @else
+                <h3 class="text-white text-lg font-black tracking-tight uppercase">
+                    {{ $theme->custom_settings['header']['business_name'] ?? tenant('name') ?? 'Laundry Kami' }}
+                </h3>
+            @endif
             <p class="text-xs leading-relaxed opacity-85 font-medium">
-                Layanan laundry premium terbaik yang mengutamakan kebersihan, wangi semerbak, dan ketepatan waktu cuci strika pakaian Anda.
+                {{ $theme->custom_settings['footer']['description'] ?? 'Layanan laundry premium terbaik yang mengutamakan kebersihan, wangi semerbak, dan ketepatan waktu cuci strika pakaian Anda.' }}
             </p>
         </div>
 
@@ -61,6 +68,6 @@
 
     <!-- Copyright Bar -->
     <div class="max-w-6xl mx-auto border-t border-slate-900 mt-12 pt-8 text-center text-[10px] text-slate-600 font-bold uppercase tracking-wider">
-        <p>&copy; {{ date('Y') }} {{ tenant('name') ?? 'Laundry Kami' }}. All rights reserved. Powered by SaaS Laundry Builder.</p>
+        <p>{!! $theme->custom_settings['footer']['copyright'] ?? '&copy; ' . date('Y') . ' ' . (tenant('name') ?? 'Laundry Kami') . '. All rights reserved.' !!}</p>
     </div>
 </footer>
