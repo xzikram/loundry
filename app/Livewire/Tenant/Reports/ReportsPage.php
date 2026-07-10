@@ -42,12 +42,12 @@ class ReportsPage extends Component
             ->take(5)->get();
 
         // Top customers
-        $topCustomers = Customer::select('customers.*')
+        $topCustomers = Customer::select('customers.id', 'customers.name', 'customers.phone')
             ->join('orders', 'orders.customer_id', '=', 'customers.id')
             ->whereYear('orders.created_at', $year)
             ->whereMonth('orders.created_at', $month)
             ->where('orders.payment_status', 'paid')
-            ->groupBy('customers.id')
+            ->groupBy('customers.id', 'customers.name', 'customers.phone')
             ->selectRaw('SUM(orders.total) as period_spent')
             ->orderByDesc('period_spent')
             ->take(5)->get();
