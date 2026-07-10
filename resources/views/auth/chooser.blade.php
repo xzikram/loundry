@@ -46,7 +46,22 @@
                     $host = request()->getHost();
                     if ($host === '127.0.0.1') $host = 'localhost';
                     $port = request()->getPort() ? ':' . request()->getPort() : '';
-                    $tenantUrl = 'http://' . $subdomain . '.' . $host . $port . '/login?email=' . urlencode($user->email);
+                    
+                    // Retrieve tenant model to get its domain
+                    $tenantModel = \App\Models\Central\Tenant::where('id', $subdomain)->first();
+                    $tenantDomain = $tenantModel ? $tenantModel->domains()->first()?->domain : null;
+                    
+                    if (!$tenantDomain) {
+                        $separator = ($host === 'localhost' || $host === '127.0.0.1') ? '.' : '-';
+                        $tenantDomain = $subdomain . $separator . $host . $port;
+                    } else {
+                        if ($port && !str_contains($tenantDomain, ':')) {
+                            $tenantDomain .= $port;
+                        }
+                    }
+                    
+                    $scheme = request()->getScheme();
+                    $tenantUrl = $scheme . '://' . $tenantDomain . '/login?email=' . urlencode($user->email);
                 @endphp
                 <a href="{{ $tenantUrl }}" class="block text-left p-5 rounded-xl border border-[#E2E7EF] bg-white hover:bg-[#F8F9FC] hover:border-[#D4A853]/30 hover:shadow-lg transition-all group">
                     <div class="flex items-center space-x-3">

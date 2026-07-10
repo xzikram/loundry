@@ -58,8 +58,25 @@ class CentralLoginPage extends Component
             $subdomain = $tenant->id;
             $host = request()->getHost();
             if ($host === '127.0.0.1') $host = 'localhost';
-            $port = request()->getPort() ? ':' . request()->getPort() : '';
-            return redirect()->away('http://' . $subdomain . '.' . $host . $port . '/login?email=' . urlencode($this->email));
+            
+            // Check if there is an existing domain in database
+            $domainModel = $tenant->domains()->first();
+            $tenantDomain = $domainModel ? $domainModel->domain : '';
+            
+            if (!$tenantDomain) {
+                // Fallback construction using the correct separator
+                $separator = ($host === 'localhost' || $host === '127.0.0.1') ? '.' : '-';
+                $port = request()->getPort() ? ':' . request()->getPort() : '';
+                $tenantDomain = $subdomain . $separator . $host . $port;
+            } else {
+                $port = request()->getPort() ? ':' . request()->getPort() : '';
+                if ($port && !str_contains($tenantDomain, ':')) {
+                    $tenantDomain .= $port;
+                }
+            }
+            
+            $scheme = request()->getScheme();
+            return redirect()->away($scheme . '://' . $tenantDomain . '/login?email=' . urlencode($this->email));
         }
 
         RateLimiter::hit($throttleKey, 60);
