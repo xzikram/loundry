@@ -2,20 +2,29 @@
 
 define('LARAVEL_START', microtime(true));
 
-require __DIR__.'/../vendor/autoload.php';
+header('Content-Type: text/plain; charset=utf-8');
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+try {
+    require __DIR__.'/../vendor/autoload.php';
 
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-$request = Illuminate\Http\Request::capture();
-$app->instance('request', $request);
-$app->bootstrap();
+    $app = require_once __DIR__.'/../bootstrap/app.php';
 
-header('Content-Type: application/json');
-echo json_encode([
-    'request_host' => $request->getHost(),
-    'config_central_domains' => config('tenancy.central_domains'),
-    'env_central_domain' => env('CENTRAL_DOMAIN'),
-    'app_url' => config('app.url'),
-    'is_central' => in_array($request->getHost(), config('tenancy.central_domains', [])),
-], JSON_PRETTY_PRINT);
+    $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+    $request = Illuminate\Http\Request::capture();
+    $app->instance('request', $request);
+    $app->bootstrap();
+
+    echo "--- LARAVEL BOOTED SUCCESSFULLY ---\n\n";
+    echo "Request Host: " . $request->getHost() . "\n";
+    echo "Config Central Domains: " . print_r(config('tenancy.central_domains'), true) . "\n";
+    echo "Env Central Domain: " . env('CENTRAL_DOMAIN') . "\n";
+    echo "App URL: " . config('app.url') . "\n";
+    echo "Is Central: " . (in_array($request->getHost(), config('tenancy.central_domains', [])) ? 'YES' : 'NO') . "\n";
+
+} catch (\Throwable $e) {
+    echo "--- FATAL ERROR DURING BOOT ---\n\n";
+    echo "Message: " . $e->getMessage() . "\n";
+    echo "File: " . $e->getFile() . "\n";
+    echo "Line: " . $e->getLine() . "\n";
+    echo "Trace:\n" . $e->getTraceAsString() . "\n";
+}
