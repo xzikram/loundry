@@ -14,6 +14,8 @@ class LoginPage extends Component
     public string $email = '';
     public string $password = '';
     public bool $remember = false;
+    public string $googleAuthUrl = '';
+    public string $centralUrl = '';
 
     public function mount()
     {
@@ -63,6 +65,27 @@ class LoginPage extends Component
         }
 
         $this->email = request()->query('email', '');
+
+        // Calculate URLs for Google OAuth and Central Portal
+        $scheme = request()->getScheme();
+        $port = request()->getPort() ? ':' . request()->getPort() : '';
+        $host = request()->getHost();
+        $centralDomains = config('tenancy.central_domains', ['127.0.0.1', 'localhost', 'clean.jarvisid.com']);
+        
+        $centralHost = 'localhost';
+        if ($host !== 'localhost' && $host !== '127.0.0.1') {
+            foreach ($centralDomains as $domain) {
+                if ($domain !== 'localhost' && $domain !== '127.0.0.1') {
+                    $centralHost = $domain;
+                    break;
+                }
+            }
+        } else {
+            $centralHost = $host;
+        }
+        
+        $this->googleAuthUrl = $scheme . '://' . $centralHost . $port . '/auth/google';
+        $this->centralUrl = $scheme . '://' . $centralHost . $port;
     }
 
     protected array $rules = [
@@ -111,26 +134,6 @@ class LoginPage extends Component
 
     public function render()
     {
-        $scheme = request()->getScheme();
-        $port = request()->getPort() ? ':' . request()->getPort() : '';
-        $host = request()->getHost();
-        $centralDomains = config('tenancy.central_domains', ['127.0.0.1', 'localhost', 'clean.jarvisid.com']);
-        
-        $centralHost = 'localhost';
-        if ($host !== 'localhost' && $host !== '127.0.0.1') {
-            foreach ($centralDomains as $domain) {
-                if ($domain !== 'localhost' && $domain !== '127.0.0.1') {
-                    $centralHost = $domain;
-                    break;
-                }
-            }
-        } else {
-            $centralHost = $host;
-        }
-        
-        $googleAuthUrl = $scheme . '://' . $centralHost . $port . '/auth/google';
-        $centralUrl = $scheme . '://' . $centralHost . $port;
-
         return <<<'HTML'
         <div>
             <div class="sm:mx-auto sm:w-full sm:max-w-md">
