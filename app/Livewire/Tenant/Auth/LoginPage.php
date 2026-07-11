@@ -56,10 +56,7 @@ class LoginPage extends Component
                         ],
                     ]);
 
-                    // Flash success message
-                    session()->flash('success', 'Login berhasil! Selamat datang kembali, ' . $tenantUser->name . '.');
-
-                    return redirect()->intended(route('tenant.dashboard'));
+                    return redirect()->route('tenant.dashboard')->with('success', 'Login berhasil! Selamat datang kembali, ' . $tenantUser->name . '.');
                 }
             }
         }
@@ -106,7 +103,7 @@ class LoginPage extends Component
             ]);
         }
 
-        if (Auth::guard('tenant')->attempt(['email' => $this->email, 'password' => $this->password, 'is_active' => true], $this->remember)) {
+        if (Auth::guard('tenant')->attempt(['email' => $this->email, 'password' => $this->password, 'is_active' => true], true)) {
             request()->session()->regenerate();
             RateLimiter::clear($throttleKey);
 
@@ -119,10 +116,7 @@ class LoginPage extends Component
                 ],
             ]);
 
-            // Flash success message
-            session()->flash('success', 'Login berhasil! Selamat datang kembali.');
-
-            return redirect()->intended(route('tenant.dashboard'));
+            return redirect()->route('tenant.dashboard')->with('success', 'Login berhasil! Selamat datang kembali.');
         }
 
         RateLimiter::hit($throttleKey, 60);
