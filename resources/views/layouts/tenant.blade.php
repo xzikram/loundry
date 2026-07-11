@@ -105,6 +105,7 @@
         </div>
     </div>
 
+    <!-- Session Debug: SUCCESS={{ session('success') }} STATUS={{ session('status') }} ERROR={{ session('error') }} -->
     <!-- Global Session Flash Notifications (Toast) -->
     @if(session()->has('success') || session()->has('error') || session()->has('status'))
         <div x-data="{ show: true }" 
@@ -116,8 +117,7 @@
              x-transition:leave="transition ease-in duration-200"
              x-transition:leave-start="opacity-100"
              x-transition:leave-end="opacity-0"
-             class="fixed bottom-5 right-5 z-50 max-w-sm w-full bg-white border border-[#E2E7EF] shadow-2xl rounded-2xl p-4 flex items-start space-x-3.5"
-             style="display: none;">
+             class="fixed bottom-5 right-5 z-50 max-w-sm w-full bg-white border border-[#E2E7EF] shadow-2xl rounded-2xl p-4 flex items-start space-x-3.5">
             
             @if(session()->has('success') || session()->has('status'))
                 <div class="h-8 w-8 rounded-lg bg-[#10B981]/10 text-[#10B981] flex items-center justify-center shrink-0">
