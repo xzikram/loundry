@@ -20,7 +20,7 @@ class ExpensePage extends Component
     public ?int $editingId = null;
 
     public string $description = '';
-    public float $amount = 0;
+    public $amount = 0;
     public ?int $categoryId = null;
     public string $expenseDate = '';
 

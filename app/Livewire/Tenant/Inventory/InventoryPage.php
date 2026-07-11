@@ -18,9 +18,9 @@ class InventoryPage extends Component
 
     public string $itemName = '';
     public string $unit = 'liter';
-    public float $currentStock = 0;
-    public float $minStock = 5;
-    public float $pricePerUnit = 0;
+    public $currentStock = 0;
+    public $minStock = 5;
+    public $pricePerUnit = 0;
     public string $supplier = '';
 
     public function updatingSearch() { $this->resetPage(); }
