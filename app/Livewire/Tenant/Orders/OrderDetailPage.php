@@ -78,22 +78,67 @@ class OrderDetailPage extends Component
 
     public function sendWhatsAppNotification()
     {
-        // Simulate gateway response delay
-        usleep(500000);
+        $phone = $this->order->customer->phone ?? '';
+        if (!$phone) {
+            session()->flash('wa_message', 'Gagal: Nomor WhatsApp pelanggan tidak ditemukan.');
+            return;
+        }
+
+        // Format phone: remove characters, convert 08/8 to 62
+        $phone = preg_replace('/[^0-9]/', '', $phone);
+        if (str_starts_with($phone, '0')) {
+            $phone = '62' . substr($phone, 1);
+        } elseif (str_starts_with($phone, '8')) {
+            $phone = '62' . $phone;
+        }
+
+        $trackingUrl = route('tenant.track', ['invoice_number' => $this->order->invoice_number]);
+        
+        $statusLabel = match ($this->order->status) {
+            OrderStatus::PENDING => 'diterima dan masuk antrean pengerjaan',
+            OrderStatus::PROCESSING => 'mulai diproses',
+            OrderStatus::WASHING => 'sedang dicuci',
+            OrderStatus::DRYING => 'sedang dikeringkan',
+            OrderStatus::IRONING => 'sedang disetrika',
+            OrderStatus::PACKING => 'sedang dipacking',
+            OrderStatus::READY => 'SELESAI dan SIAP DIAMBIL/DIANTAR',
+            OrderStatus::PICKED_UP => 'telah diambil',
+            OrderStatus::DELIVERED => 'telah diantar',
+            OrderStatus::COMPLETED => 'selesai sepenuhnya dan telah diserahkan',
+            OrderStatus::CANCELLED => 'dibatalkan',
+            default => 'diperbarui statusnya menjadi ' . $this->order->status->label()
+        };
+
+        $paymentStatusLabel = $this->order->payment_status === 'paid' ? 'LUNAS' : 'BELUM LUNAS';
+        $laundryName = \App\Models\Tenant\Setting::getValue('laundry_name', tenant('name') ?? 'KLIIN Laundry');
+
+        $message = "Halo *" . ($this->order->customer->name ?? 'Pelanggan') . "*,\n\n"
+                 . "Cucian Anda di *" . $laundryName . "* dengan nomor invoice *" . $this->order->invoice_number . "* saat ini *" . $statusLabel . "*! 🎉\n\n"
+                 . "*Rincian Tagihan:*\n"
+                 . "- Total: *Rp " . number_format($this->order->total, 0, ',', '.') . "*\n"
+                 . "- Status Pembayaran: *" . $paymentStatusLabel . "*\n\n"
+                 . "Anda dapat memantau status proses pengerjaan cucian Anda secara real-time melalui tautan berikut:\n"
+                 . $trackingUrl . "\n\n"
+                 . "Terima kasih telah mempercayai layanan kami. 🙏";
+
+        $waUrl = "https://wa.me/" . $phone . "?text=" . urlencode($message);
+
+        // Dispatch browser event to open URL in new tab
+        $this->dispatch('open-wa-chat', url: $waUrl);
 
         // Log tenant activity log
         \App\Models\Tenant\ActivityLog::create([
-            'description' => 'Mengirim notifikasi WA status Ready/Selesai ke pelanggan: ' . ($this->order->customer->phone ?? 'Pelanggan'),
+            'description' => 'Membuka WhatsApp Click-to-Chat untuk notifikasi status ' . $this->order->status->label() . ' ke pelanggan: ' . ($this->order->customer->phone ?? 'Pelanggan'),
             'causer_id' => Auth::guard('tenant')->id(),
         ]);
 
-        session()->flash('wa_message', 'Notifikasi WhatsApp interaktif berhasil dikirim ke ' . ($this->order->customer->name ?? 'Pelanggan') . '!');
+        session()->flash('wa_message', 'Tautan WhatsApp berhasil dibuat dan siap dikirim!');
     }
 
     public function render()
     {
         return <<<'HTML'
-        <div class="space-y-8">
+        <div class="space-y-8" x-data x-init="window.addEventListener('open-wa-chat', event => { window.open(event.detail.url, '_blank'); })">
             <!-- Session Messages -->
             @if(session()->has('message'))
                 <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 p-4 rounded-xl text-sm font-medium">
@@ -125,7 +170,7 @@ class OrderDetailPage extends Component
                 </div>
 
                 <div class="flex space-x-3">
-                    @if($order->status === OrderStatus::READY || $order->status === OrderStatus::COMPLETED)
+                    @if($order->status !== OrderStatus::CANCELLED)
                         <button wire:click="sendWhatsAppNotification"
                             class="inline-flex items-center px-4 py-2 border border-emerald-200 text-sm font-semibold rounded-xl text-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition-all cursor-pointer">
                             <svg class="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
