@@ -73,6 +73,13 @@ class InventoryPage extends Component
         $this->reset(['itemName', 'unit', 'currentStock', 'minStock', 'pricePerUnit', 'supplier', 'editingId']);
     }
 
+    public function closeModal()
+    {
+        $this->showModal = false;
+        $this->reset(['itemName', 'unit', 'currentStock', 'minStock', 'pricePerUnit', 'supplier', 'editingId']);
+        $this->resetValidation();
+    }
+
     public function delete($id) { Inventory::findOrFail($id)->delete(); }
 
     public function render()

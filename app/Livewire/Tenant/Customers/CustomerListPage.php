@@ -82,6 +82,14 @@ class CustomerListPage extends Component
         $this->reset(['name', 'phone', 'email', 'address', 'editingCustomerId']);
     }
 
+    public function closeModal()
+    {
+        $this->showCreateModal = false;
+        $this->showEditModal = false;
+        $this->reset(['name', 'phone', 'email', 'address', 'editingCustomerId']);
+        $this->resetValidation();
+    }
+
     public function delete($id)
     {
         Customer::findOrFail($id)->delete();

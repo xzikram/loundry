@@ -10,25 +10,28 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>body { font-family: 'Outfit', sans-serif; }</style>
 </head>
-<body class="h-full antialiased bg-[#F8F9FC] text-[#1A1D23]">
-    <div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(30,58,95,0.06),transparent)]"></div>
+<body class="h-full antialiased text-[#1A1D23]">
+    <div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden"
+         style="background: linear-gradient(135deg, #0F1A2E 0%, #162240 35%, #1A2D4A 65%, #0F1A2E 100%);">
+        <div class="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full" style="background: radial-gradient(circle, rgba(212,168,83,0.12) 0%, transparent 70%);"></div>
+        <div class="absolute bottom-[-15%] right-[-8%] w-[600px] h-[600px] rounded-full" style="background: radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%);"></div>
+        <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4A853]/40 to-transparent"></div>
         
         <div class="relative z-10 sm:mx-auto sm:w-full sm:max-w-md">
             <div class="flex justify-center">
-                <div class="flex items-center space-x-2">
-                    <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-[#1E3A5F] to-[#2A5082] flex items-center justify-center shadow-lg shadow-[#1E3A5F]/20">
-                        <svg class="h-5 w-5 text-[#D4A853]" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/><path d="M10 5a1 1 0 011 1v3.586l2.707 2.707a1 1 0 01-1.414 1.414l-3-3A1 1 0 019 10V6a1 1 0 011-1z"/></svg>
+                <div class="flex items-center space-x-2.5">
+                    <div class="h-11 w-11 rounded-xl bg-gradient-to-br from-[#D4A853] via-[#E8C97A] to-[#10B981] flex items-center justify-center shadow-lg shadow-[#D4A853]/25">
+                        <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                     </div>
-                    <span class="text-xl font-bold text-[#1E3A5F] tracking-wider">KLIIN</span>
+                    <span class="text-2xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-[#D4A853] to-[#E8C97A]">KLIIN</span>
                 </div>
             </div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-[#1A1D23] tracking-tight">Lengkapi Registrasi</h2>
-            <p class="mt-2 text-center text-sm text-[#8896A6]">Tinggal satu langkah lagi untuk memulai outlet Anda</p>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-white tracking-tight">Lengkapi Registrasi</h2>
+            <p class="mt-2 text-center text-sm text-white/50">Tinggal satu langkah lagi untuk memulai outlet Anda</p>
         </div>
 
         <div class="relative z-10 mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <div class="bg-white py-8 px-6 border border-[#E2E7EF] shadow-xl shadow-[#1E3A5F]/5 sm:rounded-2xl sm:px-10">
+            <div class="bg-white/95 backdrop-blur-xl py-8 px-6 border border-white/20 shadow-2xl shadow-black/20 sm:rounded-2xl sm:px-10">
                 
                 <!-- Google Account Card -->
                 <div class="flex items-center space-x-3 p-3 bg-slate-50 border border-[#E2E7EF] rounded-xl mb-6">

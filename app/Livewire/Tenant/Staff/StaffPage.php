@@ -81,6 +81,13 @@ class StaffPage extends Component
         $this->reset(['staffName', 'staffEmail', 'staffPhone', 'staffPassword', 'roleId', 'editingId']);
     }
 
+    public function closeModal()
+    {
+        $this->showModal = false;
+        $this->reset(['staffName', 'staffEmail', 'staffPhone', 'staffPassword', 'roleId', 'editingId']);
+        $this->resetValidation();
+    }
+
     public function toggleActive($id)
     {
         $user = User::findOrFail($id);

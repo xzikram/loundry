@@ -105,42 +105,44 @@
         </div>
     </div>
 
-    <!-- Session Debug: SUCCESS={{ session('success') }} STATUS={{ session('status') }} ERROR={{ session('error') }} -->
-    <!-- Global Session Flash Notifications (Toast) -->
+    <!-- Global Session Flash Notifications (Toast via JS Native) -->
     @if(session()->has('success') || session()->has('error') || session()->has('status'))
-        <div x-data="{ show: true }" 
-             x-show="show" 
-             x-init="setTimeout(() => show = false, 5000)" 
-             x-transition:enter="transition ease-out duration-300 transform"
-             x-transition:enter-start="opacity-0 translate-y-2 sm:translate-y-0 sm:translate-x-2"
-             x-transition:enter-end="opacity-100 translate-y-0 sm:translate-x-0"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
-             class="fixed bottom-5 right-5 z-50 max-w-sm w-full bg-white border border-[#E2E7EF] shadow-2xl rounded-2xl p-4 flex items-start space-x-3.5">
-            
-            @if(session()->has('success') || session()->has('status'))
-                <div class="h-8 w-8 rounded-lg bg-[#10B981]/10 text-[#10B981] flex items-center justify-center shrink-0">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                </div>
-                <div class="flex-1">
-                    <h4 class="text-xs font-bold text-[#1A1D23]">Berhasil</h4>
-                    <p class="text-xs text-[#8896A6] mt-0.5">{{ session('success') ?? session('status') }}</p>
-                </div>
-            @else
-                <div class="h-8 w-8 rounded-lg bg-rose-500/10 text-rose-500 flex items-center justify-center shrink-0">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                </div>
-                <div class="flex-1">
-                    <h4 class="text-xs font-bold text-[#1A1D23]">Terjadi Kesalahan</h4>
-                    <p class="text-xs text-[#8896A6] mt-0.5">{{ session('error') }}</p>
-                </div>
-            @endif
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var type = '{{ session()->has("error") ? "error" : "success" }}';
+            var message = @json(session('success') ?? session('status') ?? session('error'));
+            if (!message) return;
 
-            <button @click="show = false" class="text-[#8896A6] hover:text-[#1A1D23] transition-colors shrink-0">
-                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-        </div>
+            var toast = document.createElement('div');
+            toast.id = 'global-toast';
+            toast.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;max-width:380px;width:100%;padding:16px;border-radius:16px;display:flex;align-items:flex-start;gap:12px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);border:1px solid #E2E7EF;opacity:0;transform:translateY(12px);transition:all .4s cubic-bezier(.16,1,.3,1);';
+            toast.style.background = 'white';
+
+            var iconBg = type === 'error' ? 'rgba(244,63,94,.1)' : 'rgba(16,185,129,.1)';
+            var iconColor = type === 'error' ? '#F43F5E' : '#10B981';
+            var iconPath = type === 'error'
+                ? 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'
+                : 'M5 13l4 4L19 7';
+            var title = type === 'error' ? 'Terjadi Kesalahan' : 'Berhasil';
+
+            toast.innerHTML = '<div style="height:32px;width:32px;min-width:32px;border-radius:8px;background:'+iconBg+';display:flex;align-items:center;justify-content:center"><svg style="height:18px;width:18px;color:'+iconColor+'" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="'+iconPath+'"/></svg></div>'
+                + '<div style="flex:1;min-width:0"><h4 style="font-size:12px;font-weight:700;color:#1A1D23;margin:0">'+title+'</h4><p style="font-size:12px;color:#8896A6;margin:2px 0 0">'+message+'</p></div>'
+                + '<button onclick="this.parentElement.style.opacity=0;setTimeout(function(){var t=document.getElementById(\'global-toast\');if(t)t.remove()},300)" style="background:none;border:none;cursor:pointer;color:#8896A6;padding:0;line-height:1"><svg style="height:16px;width:16px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>';
+
+            document.body.appendChild(toast);
+            requestAnimationFrame(function() {
+                requestAnimationFrame(function() {
+                    toast.style.opacity = '1';
+                    toast.style.transform = 'translateY(0)';
+                });
+            });
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(12px)';
+                setTimeout(function() { toast.remove(); }, 400);
+            }, 5000);
+        });
+    </script>
     @endif
 
     @livewireScripts

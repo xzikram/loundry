@@ -1,21 +1,21 @@
 <div>
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <div class="flex justify-center">
-            <div class="flex items-center space-x-2">
-                <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-[#1E3A5F] to-[#2A5082] flex items-center justify-center shadow-lg shadow-[#1E3A5F]/20">
-                    <svg class="h-5 w-5 text-[#D4A853]" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/><path d="M10 5a1 1 0 011 1v3.586l2.707 2.707a1 1 0 01-1.414 1.414l-3-3A1 1 0 019 10V6a1 1 0 011-1z"/></svg>
+            <div class="flex items-center space-x-2.5">
+                <div class="h-11 w-11 rounded-xl bg-gradient-to-br from-[#D4A853] via-[#E8C97A] to-[#10B981] flex items-center justify-center shadow-lg shadow-[#D4A853]/25">
+                    <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 </div>
-                <span class="text-xl font-bold text-[#1E3A5F] tracking-wider">KLIIN</span>
+                <span class="text-2xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-[#D4A853] to-[#E8C97A]">KLIIN</span>
             </div>
         </div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-[#1A1D23] tracking-tight">Daftar Akun Baru</h2>
-        <p class="mt-2 text-center text-sm text-[#8896A6]">
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-white tracking-tight">Daftar Akun Baru</h2>
+        <p class="mt-2 text-center text-sm text-white/50">
             Mulai kelola bisnis laundry Anda secara pintar
         </p>
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 border border-[#E2E7EF] shadow-xl shadow-[#1E3A5F]/5 sm:rounded-2xl sm:px-10 space-y-6">
+        <div class="bg-white/95 backdrop-blur-xl py-8 px-4 border border-white/20 shadow-2xl shadow-black/20 sm:rounded-2xl sm:px-10 space-y-6">
             
             <!-- Promo/Trial Banner -->
             <div class="bg-gradient-to-r from-[#1E3A5F]/5 to-[#D4A853]/5 border border-[#1E3A5F]/10 p-4 rounded-xl flex items-start space-x-3">

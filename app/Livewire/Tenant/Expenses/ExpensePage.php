@@ -59,6 +59,13 @@ class ExpensePage extends Component
         $this->showModal = false;
     }
 
+    public function closeModal()
+    {
+        $this->showModal = false;
+        $this->reset(['description', 'amount', 'categoryId', 'editingId']);
+        $this->resetValidation();
+    }
+
     public function delete($id) { Expense::findOrFail($id)->delete(); }
 
     public function render()

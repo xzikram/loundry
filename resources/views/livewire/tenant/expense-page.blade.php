@@ -54,7 +54,7 @@
             <div class="bg-white border border-[#E2E7EF] rounded-2xl w-full max-w-md p-6 shadow-2xl space-y-5">
                 <div class="flex justify-between items-center border-b border-[#E2E7EF] pb-3">
                     <h3 class="text-lg font-bold text-[#1A1D23]">Catat Pengeluaran</h3>
-                    <button @click="$wire.showModal = false" class="text-[#8896A6] hover:text-[#1A1D23]"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                    <button wire:click="closeModal" class="text-[#8896A6] hover:text-[#1A1D23]"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
                 </div>
                 <div class="space-y-4">
                     <div>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <div class="flex justify-end space-x-3 border-t border-[#E2E7EF] pt-4">
-                    <button @click="$wire.showModal = false" class="px-4 py-2 border border-[#E2E7EF] text-[#4A5568] rounded-xl text-sm font-semibold">Batal</button>
+                    <button wire:click="closeModal" class="px-4 py-2 border border-[#E2E7EF] text-[#4A5568] rounded-xl text-sm font-semibold">Batal</button>
                     <button wire:click="save" class="px-4 py-2 bg-[#1E3A5F] text-white rounded-xl text-sm font-semibold shadow-lg cursor-pointer">Simpan</button>
                 </div>
             </div>
