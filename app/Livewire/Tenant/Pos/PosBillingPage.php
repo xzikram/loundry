@@ -107,6 +107,33 @@ class PosBillingPage extends Component
         $this->showCustomerModal = false;
     }
 
+    public function openCustomerModal()
+    {
+        $this->reset(['newCustomerName', 'newCustomerPhone']);
+        $this->resetValidation();
+        $this->showCustomerModal = true;
+    }
+
+    public function closeCustomerModal()
+    {
+        $this->showCustomerModal = false;
+        $this->reset(['newCustomerName', 'newCustomerPhone']);
+        $this->resetValidation();
+    }
+
+    public function closePaymentModal()
+    {
+        $this->showPaymentModal = false;
+        $this->resetValidation();
+    }
+
+    public function closeAiScanModal()
+    {
+        $this->showAiScanModal = false;
+        $this->isAiScanning = false;
+        $this->resetValidation();
+    }
+
     public function filterCategory($id)
     {
         $this->selectedCategoryId = $id;
@@ -492,7 +519,7 @@ class PosBillingPage extends Component
                             <span>Timbangan: {{ $isScaleConnected ? $scaleWeight . ' kg' : 'Offline' }}</span>
                         </button>
 
-                        <button @click="$wire.showCustomerModal = true" class="px-4 py-2.5 bg-[#F8F9FC] hover:bg-[#E2E7EF] text-[#1A1D23] rounded-xl border border-[#E2E7EF] text-sm font-semibold transition-all cursor-pointer">
+                        <button wire:click="openCustomerModal" class="px-4 py-2.5 bg-[#F8F9FC] hover:bg-[#E2E7EF] text-[#1A1D23] rounded-xl border border-[#E2E7EF] text-sm font-semibold transition-all cursor-pointer">
                             + Pelanggan
                         </button>
                     </div>
@@ -652,7 +679,7 @@ class PosBillingPage extends Component
                     <div class="bg-white border border-[#E2E7EF] rounded-2xl w-full max-w-md p-6 shadow-2xl space-y-6">
                         <div class="flex justify-between items-center border-b border-[#E2E7EF] pb-3">
                             <h3 class="text-lg font-bold text-[#1A1D23]">Tambah Pelanggan Baru</h3>
-                            <button @click="$wire.showCustomerModal = false" class="text-[#8896A6] hover:text-[#1A1D23]">
+                            <button wire:click="closeCustomerModal" class="text-[#8896A6] hover:text-[#1A1D23]">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
@@ -671,7 +698,7 @@ class PosBillingPage extends Component
                             </div>
                         </div>
                         <div class="flex justify-end space-x-3 border-t border-[#E2E7EF] pt-4">
-                            <button @click="$wire.showCustomerModal = false" class="px-4 py-2 border border-[#E2E7EF] text-[#8896A6] hover:text-[#1A1D23] rounded-xl text-sm font-semibold">Batal</button>
+                            <button wire:click="closeCustomerModal" class="px-4 py-2 border border-[#E2E7EF] text-[#8896A6] hover:text-[#1A1D23] rounded-xl text-sm font-semibold">Batal</button>
                             <button wire:click="createCustomer" class="px-4 py-2 bg-[#1E3A5F] hover:bg-[#2A5082] text-white rounded-xl text-sm font-semibold shadow-lg">Simpan</button>
                         </div>
                     </div>
@@ -684,7 +711,7 @@ class PosBillingPage extends Component
                     <div class="bg-white border border-[#E2E7EF] rounded-2xl w-full max-w-md p-6 shadow-2xl space-y-6">
                         <div class="flex justify-between items-center border-b border-[#E2E7EF] pb-3">
                             <h3 class="text-lg font-bold text-[#1A1D23]">Konfirmasi Pembayaran</h3>
-                            <button @click="$wire.showPaymentModal = false" class="text-[#8896A6] hover:text-[#1A1D23]">
+                            <button wire:click="closePaymentModal" class="text-[#8896A6] hover:text-[#1A1D23]">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
@@ -732,7 +759,7 @@ class PosBillingPage extends Component
                             @endif
                         </div>
                         <div class="flex justify-end space-x-3 border-t border-[#E2E7EF] pt-4">
-                            <button @click="$wire.showPaymentModal = false" class="px-4 py-2 border border-[#E2E7EF] text-[#8896A6] hover:text-[#1A1D23] rounded-xl text-sm font-semibold">Batal</button>
+                            <button wire:click="closePaymentModal" class="px-4 py-2 border border-[#E2E7EF] text-[#8896A6] hover:text-[#1A1D23] rounded-xl text-sm font-semibold">Batal</button>
                             <button wire:click="checkout" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-emerald-600/10 cursor-pointer">Selesaikan Transaksi</button>
                         </div>
                     </div>
@@ -753,7 +780,7 @@ class PosBillingPage extends Component
                                 <span class="h-2 w-2 rounded-full bg-purple-500 animate-ping"></span>
                                 <h3 class="text-lg font-bold text-[#1A1D23]">AI Clothes Classifier Scanner</h3>
                             </div>
-                            <button @click="$wire.showAiScanModal = false" class="text-[#8896A6] hover:text-[#1A1D23]">
+                            <button wire:click="closeAiScanModal" class="text-[#8896A6] hover:text-[#1A1D23]">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
@@ -788,7 +815,7 @@ class PosBillingPage extends Component
                         </div>
 
                         <div class="flex justify-end space-x-3 border-t border-[#E2E7EF] pt-4">
-                            <button @click="$wire.showAiScanModal = false" class="px-4 py-2 border border-[#E2E7EF] text-[#8896A6] hover:text-[#1A1D23] rounded-xl text-sm font-semibold" :disabled="$wire.isAiScanning">Batal</button>
+                            <button wire:click="closeAiScanModal" class="px-4 py-2 border border-[#E2E7EF] text-[#8896A6] hover:text-[#1A1D23] rounded-xl text-sm font-semibold" :disabled="$wire.isAiScanning">Batal</button>
                             <button wire:click="runAiScan('mock_base64')" class="px-5 py-2 bg-[#D4A853] hover:bg-[#E8C97A] text-white rounded-xl text-sm font-bold shadow-lg shadow-[#D4A853]/10 cursor-pointer flex items-center space-x-2" :disabled="$wire.isAiScanning">
                                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
