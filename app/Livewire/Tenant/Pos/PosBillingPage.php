@@ -44,12 +44,12 @@ class PosBillingPage extends Component
     
     // Scale and AI States
     public bool $isScaleConnected = false;
-    public float $scaleWeight = 0.00;
+    public $scaleWeight = 0.00;
     public bool $isAiScanning = false;
     public ?int $selectedCartItemId = null;
     
     // Payment info
-    public float $paidAmount = 0.00;
+    public $paidAmount = 0.00;
     public string $paymentMethod = 'cash'; // cash, transfer, qris
     public string $referenceNumber = '';
 
