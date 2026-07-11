@@ -34,6 +34,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('KLIIN Admin')
             ->font('Outfit')
             ->brandLogo(fn () => view('filament.brand-logo'))
+            ->favicon('https://img.icons8.com/color/192/000000/washing-machine.png')
             ->sidebarCollapsibleOnDesktop()
             ->colors([
                 'primary' => [

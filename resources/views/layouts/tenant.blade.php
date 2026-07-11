@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ tenancy()->initialized ? \App\Models\Tenant\Setting::getValue('laundry_name', 'KLIIN') : 'KLIIN' }} - Portal</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/color/192/000000/washing-machine.png">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#1E3A5F">
 
