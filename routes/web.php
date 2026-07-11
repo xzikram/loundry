@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Central\Auth\CentralLoginPage;
+use App\Http\Controllers\Central\Auth\GoogleAuthController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,6 +13,12 @@ Route::get('/login', CentralLoginPage::class)->name('login');
 
 // Unified register route
 Route::get('/register', \App\Livewire\Central\Auth\RegisterPage::class)->name('register');
+
+// Google OAuth routes
+Route::get('/auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+Route::get('/register/complete', [GoogleAuthController::class, 'showCompleteRegistrationForm'])->name('register.complete');
+Route::post('/register/complete', [GoogleAuthController::class, 'completeRegistration'])->name('register.complete.submit');
 
 // Redirect default Filament admin login to unified central login page
 Route::get('/admin/login', function () {
