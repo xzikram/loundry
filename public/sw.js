@@ -1,7 +1,6 @@
-const CACHE_NAME = 'laundry-promax-v1';
+const CACHE_NAME = 'spinly-v2';
 const ASSETS_TO_CACHE = [
     '/',
-    '/login',
     '/manifest.json',
 ];
 
@@ -12,6 +11,7 @@ self.addEventListener('install', (event) => {
             return cache.addAll(ASSETS_TO_CACHE);
         })
     );
+    self.skipWaiting();
 });
 
 // Activate Event
@@ -27,6 +27,7 @@ self.addEventListener('activate', (event) => {
             );
         })
     );
+    self.clients.claim();
 });
 
 // Fetch Event with Network-first Fallback to Cache
@@ -34,9 +35,25 @@ self.addEventListener('fetch', (event) => {
     // Only cache GET requests
     if (event.request.method !== 'GET') return;
 
+    const url = new URL(event.request.url);
+    
+    // Skip caching for auth, login, and livewire endpoints to avoid CSRF and login loop issues
+    if (
+        url.pathname.includes('/auth/') || 
+        url.pathname.includes('/login') || 
+        url.pathname.includes('/livewire/') ||
+        url.hostname.includes('google')
+    ) {
+        return;
+    }
+
     event.respondWith(
         fetch(event.request)
             .then((response) => {
+                // Don't cache non-successful responses, redirects, or opaque responses
+                if (!response || response.status !== 200 || response.type !== 'basic') {
+                    return response;
+                }
                 const responseClone = response.clone();
                 caches.open(CACHE_NAME).then((cache) => {
                     cache.put(event.request, responseClone);
