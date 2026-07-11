@@ -1,11 +1,11 @@
 {
-    "name": "Laundry ProMax",
-    "short_name": "Laundry Pro",
-    "description": "Premium Laundry POS & Multi-Tenant Management SaaS",
+    "name": "Spinly",
+    "short_name": "Spinly",
+    "description": "Smart Laundry POS & Multi-Tenant Management SaaS",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#020617",
-    "theme_color": "#4f46e5",
+    "theme_color": "#1E3A5F",
     "orientation": "any",
     "icons": [
         {
