@@ -20,7 +20,7 @@
     @endif
 
     <!-- Search & Filters -->
-    <div class="bg-white border border-[#E2E7EF] p-4 rounded-2xl flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+    <div class="bg-white border border-[#E2E7EF] p-4 rounded-2xl flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 shadow-sm">
         <div class="flex-1 relative">
             <input wire:model.live.debounce.300ms="search" type="text" placeholder="Cari nama layanan..."
                 class="w-full pl-10 pr-4 py-2.5 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] placeholder-[#8896A6] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/10 focus:border-[#1E3A5F] text-sm">
@@ -120,119 +120,218 @@
 
     <!-- Add / Edit Modal -->
     @if($showModal)
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm px-4">
-            <div class="bg-white border border-[#E2E7EF] rounded-2xl w-full max-w-2xl p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
-                <div class="flex justify-between items-center border-b border-[#E2E7EF] pb-3">
-                    <h3 class="text-lg font-bold text-[#1A1D23]">{{ $editingId ? 'Edit' : 'Tambah' }} Layanan & Tarif Harga</h3>
-                    <button wire:click="closeModal" class="text-[#8896A6] hover:text-[#1A1D23] cursor-pointer">
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs px-4">
+            <div class="bg-white border border-[#E2E7EF] rounded-2xl w-full max-w-3xl p-6 shadow-2xl relative overflow-hidden max-h-[90vh] flex flex-col">
+                
+                <!-- Premium top line decoration -->
+                <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#D4A853] via-[#10B981] to-[#3B82F6]"></div>
+
+                <!-- Header -->
+                <div class="flex justify-between items-center border-b border-[#E2E7EF] pb-4 shrink-0">
+                    <div>
+                        <h3 class="text-xl font-bold text-[#1A1D23]">{{ $editingId ? 'Edit' : 'Tambah' }} Layanan & Tarif Harga</h3>
+                        <p class="text-xs text-[#8896A6] mt-0.5">Konfigurasi info item layanan beserta tarif per prioritas outlet aktif</p>
+                    </div>
+                    <button wire:click="closeModal" class="text-[#8896A6] hover:text-[#1A1D23] cursor-pointer p-1 rounded-lg hover:bg-slate-100 transition-all">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- General Service Details -->
-                    <div class="space-y-4 md:border-r md:border-[#E2E7EF] md:pr-4">
-                        <h4 class="text-xs font-bold text-[#1E3A5F] uppercase tracking-wider border-b border-[#E2E7EF]/50 pb-1">Detail Layanan</h4>
+                <!-- Body Content (Scrollable) -->
+                <div class="flex-1 overflow-y-auto py-5 pr-1 space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                         
-                        <div>
-                            <label class="block text-xs font-medium text-[#4A5568]">Kategori Layanan</label>
-                            <select wire:model="categoryId" class="w-full mt-1 px-3 py-2 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] rounded-xl text-sm focus:outline-none focus:border-[#1E3A5F]">
-                                <option value="">Pilih Kategori</option>
-                                @foreach($categories as $cat)
-                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('categoryId') <p class="text-2xs text-rose-500 mt-1">{{ $message }}</p> @enderror
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-medium text-[#4A5568]">Nama Layanan</label>
-                            <input wire:model="serviceName" type="text" placeholder="Contoh: Cuci Kering Jas" class="w-full mt-1 px-3 py-2 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] rounded-xl text-sm focus:outline-none focus:border-[#1E3A5F]">
-                            @error('serviceName') <p class="text-2xs text-rose-500 mt-1">{{ $message }}</p> @enderror
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-medium text-[#4A5568]">Deskripsi Singkat</label>
-                            <textarea wire:model="description" rows="2" placeholder="Tulis rincian atau keterangan item..." class="w-full mt-1 px-3 py-2 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] rounded-xl text-sm focus:outline-none focus:border-[#1E3A5F]"></textarea>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3">
+                        <!-- Left Panel: General Service Details -->
+                        <div class="lg:col-span-5 space-y-4 lg:border-r lg:border-[#E2E7EF] lg:pr-6">
+                            <div class="flex items-center space-x-2 border-b border-[#E2E7EF]/50 pb-2">
+                                <span class="text-sm">📋</span>
+                                <h4 class="text-xs font-bold text-[#1E3A5F] uppercase tracking-wider">Detail Informasi</h4>
+                            </div>
+                            
                             <div>
-                                <label class="block text-xs font-medium text-[#4A5568]">Satuan Hitung</label>
-                                <select wire:model="unit" class="w-full mt-1 px-3 py-2 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] rounded-xl text-sm focus:outline-none focus:border-[#1E3A5F]">
-                                    <option value="kg">Kiloan (kg)</option>
-                                    <option value="pcs">Satuan (pcs)</option>
-                                    <option value="meter">Meter (m)</option>
-                                    <option value="pasang">Pasang (psg)</option>
+                                <label class="block text-xs font-semibold text-[#4A5568]">Kategori Layanan</label>
+                                <select wire:model="categoryId" class="w-full mt-1 px-3 py-2.5 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/15 focus:border-[#1E3A5F] transition-all">
+                                    <option value="">Pilih Kategori</option>
+                                    @foreach($categories as $cat)
+                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                    @endforeach
                                 </select>
+                                @error('categoryId') <p class="text-2xs text-rose-500 mt-1 font-medium">{{ $message }}</p> @enderror
                             </div>
+
                             <div>
-                                <label class="block text-xs font-medium text-[#4A5568]">Durasi (Jam)</label>
-                                <input wire:model="estimatedDurationHours" type="number" class="w-full mt-1 px-3 py-2 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] rounded-xl text-sm focus:outline-none focus:border-[#1E3A5F]">
+                                <label class="block text-xs font-semibold text-[#4A5568]">Nama Layanan</label>
+                                <input wire:model="serviceName" type="text" placeholder="Contoh: Cuci Kering Jas" class="w-full mt-1 px-3 py-2.5 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] placeholder-[#8896A6] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/15 focus:border-[#1E3A5F] transition-all">
+                                @error('serviceName') <p class="text-2xs text-rose-500 mt-1 font-medium">{{ $message }}</p> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-[#4A5568]">Deskripsi</label>
+                                <textarea wire:model="description" rows="2" placeholder="Tulis keterangan atau spesifikasi item..." class="w-full mt-1 px-3 py-2.5 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] placeholder-[#8896A6] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/15 focus:border-[#1E3A5F] transition-all"></textarea>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#4A5568]">Satuan</label>
+                                    <select wire:model="unit" class="w-full mt-1 px-3 py-2.5 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/15 focus:border-[#1E3A5F] transition-all">
+                                        <option value="kg">Kiloan (kg)</option>
+                                        <option value="pcs">Satuan (pcs)</option>
+                                        <option value="meter">Meter (m)</option>
+                                        <option value="pasang">Pasang (psg)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#4A5568]">Estimasi (Jam)</label>
+                                    <input wire:model="estimatedDurationHours" type="number" class="w-full mt-1 px-3 py-2.5 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/15 focus:border-[#1E3A5F] transition-all">
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-2 pt-2">
+                                <input wire:model="isActive" type="checkbox" id="is_active" class="h-4.5 w-4.5 text-[#1E3A5F] border-[#E2E7EF] rounded focus:ring-[#1E3A5F]/20 cursor-pointer">
+                                <label for="is_active" class="text-xs font-bold text-[#4A5568] select-none cursor-pointer">Layanan Aktif & Tampil di POS</label>
                             </div>
                         </div>
 
-                        <div class="flex items-center space-x-2 pt-1">
-                            <input wire:model="isActive" type="checkbox" id="is_active" class="h-4 w-4 text-[#1E3A5F] border-[#E2E7EF] rounded focus:ring-[#1E3A5F]/20">
-                            <label for="is_active" class="text-xs font-medium text-[#4A5568] select-none">Layanan Aktif & Tampil di POS</label>
-                        </div>
-                    </div>
+                        <!-- Right Panel: Dynamic Thousand Separator Pricing Form -->
+                        <div class="lg:col-span-7 space-y-4">
+                            <div class="flex items-center space-x-2 border-b border-[#E2E7EF]/50 pb-2">
+                                <span class="text-sm">💰</span>
+                                <h4 class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Konfigurasi Tarif Harga</h4>
+                            </div>
 
-                    <!-- Pricing Info -->
-                    <div class="space-y-4">
-                        <h4 class="text-xs font-bold text-emerald-600 uppercase tracking-wider border-b border-[#E2E7EF]/50 pb-1">Konfigurasi Tarif Harga</h4>
-
-                        <!-- Regular Pricing -->
-                        <div class="p-3 bg-[#F8F9FC] border border-[#E2E7EF] rounded-xl space-y-2">
-                            <span class="text-[10px] font-bold text-[#1A1D23] uppercase tracking-wide">1. Tarif Reguler</span>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block text-[10px] text-[#8896A6]">Harga (Rp)</label>
-                                    <input wire:model="priceRegular" type="number" class="w-full mt-0.5 px-3 py-1.5 border border-[#E2E7EF] bg-white text-[#1A1D23] rounded-lg text-xs focus:outline-none focus:border-[#1E3A5F]">
+                            <!-- 1. Regular Pricing Card -->
+                            <div class="p-4 bg-[#F8F9FC] border border-[#E2E7EF] rounded-2xl shadow-xs space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-bold text-[#1E3A5F] uppercase tracking-wide flex items-center gap-1.5">
+                                        <span>🐢</span> 1. Tarif Reguler
+                                    </span>
+                                    <span class="text-[10px] bg-slate-200/50 text-[#4A5568] px-2 py-0.5 rounded-md font-semibold">Default</span>
                                 </div>
-                                <div>
-                                    <label class="block text-[10px] text-[#8896A6]">Min. Order ({{ $unit }})</label>
-                                    <input wire:model="minWeightRegular" type="number" step="0.1" class="w-full mt-0.5 px-3 py-1.5 border border-[#E2E7EF] bg-white text-[#1A1D23] rounded-lg text-xs focus:outline-none focus:border-[#1E3A5F]">
+                                
+                                <div class="grid grid-cols-2 gap-4">
+                                    <!-- Custom Thousand Separator Input -->
+                                    <div x-data="{
+                                        raw: @entangle('priceRegular'),
+                                        display: '',
+                                        format(val) {
+                                            if (!val) return '';
+                                            let clean = val.toString().replace(/[^0-9]/g, '');
+                                            return clean.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                                        },
+                                        updateRaw(val) {
+                                            let clean = val.replace(/[^0-9]/g, '');
+                                            this.raw = clean ? parseInt(clean) : 0;
+                                            this.display = this.format(this.raw);
+                                        }
+                                    }" x-init="display = format(raw); $watch('raw', v => display = format(v))">
+                                        <label class="block text-[11px] font-bold text-[#4A5568]">Harga (Rp)</label>
+                                        <div class="relative mt-1 rounded-xl shadow-xs">
+                                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                                <span class="text-xs font-semibold text-slate-400">Rp</span>
+                                            </div>
+                                            <input type="text" x-model="display" @input="updateRaw($event.target.value)" 
+                                                class="w-full pl-8 pr-3 py-2 border border-[#E2E7EF] bg-white text-[#1A1D23] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/15 focus:border-[#1E3A5F] transition-all">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-[#4A5568]">Min. Order ({{ $unit }})</label>
+                                        <input wire:model="minWeightRegular" type="number" step="0.1" class="w-full mt-1 px-3 py-2 border border-[#E2E7EF] bg-white text-[#1A1D23] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/15 focus:border-[#1E3A5F] transition-all">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. Express Pricing Card -->
+                            <div class="p-4 bg-blue-50/20 border border-blue-100 rounded-2xl shadow-xs space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-bold text-blue-700 uppercase tracking-wide flex items-center gap-1.5">
+                                        <span>⚡</span> 2. Tarif Express
+                                    </span>
+                                    <span class="text-[10px] bg-blue-100/30 text-blue-600 px-2 py-0.5 rounded-md font-semibold">Cepat</span>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <!-- Custom Thousand Separator Input -->
+                                    <div x-data="{
+                                        raw: @entangle('priceExpress'),
+                                        display: '',
+                                        format(val) {
+                                            if (!val) return '';
+                                            let clean = val.toString().replace(/[^0-9]/g, '');
+                                            return clean.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                                        },
+                                        updateRaw(val) {
+                                            let clean = val.replace(/[^0-9]/g, '');
+                                            this.raw = clean ? parseInt(clean) : 0;
+                                            this.display = this.format(this.raw);
+                                        }
+                                    }" x-init="display = format(raw); $watch('raw', v => display = format(v))">
+                                        <label class="block text-[11px] font-bold text-[#4A5568]">Harga (Rp)</label>
+                                        <div class="relative mt-1 rounded-xl shadow-xs">
+                                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                                <span class="text-xs font-semibold text-slate-400">Rp</span>
+                                            </div>
+                                            <input type="text" x-model="display" @input="updateRaw($event.target.value)" 
+                                                class="w-full pl-8 pr-3 py-2 border border-blue-200/40 bg-white text-[#1A1D23] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-[#4A5568]">Min. Order ({{ $unit }})</label>
+                                        <input wire:model="minWeightExpress" type="number" step="0.1" class="w-full mt-1 px-3 py-2 border border-blue-200/40 bg-white text-[#1A1D23] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. Super Express Pricing Card -->
+                            <div class="p-4 bg-purple-50/20 border border-purple-100 rounded-2xl shadow-xs space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-bold text-purple-700 uppercase tracking-wide flex items-center gap-1.5">
+                                        <span>🚀</span> 3. Tarif Super Express
+                                    </span>
+                                    <span class="text-[10px] bg-purple-100/30 text-purple-600 px-2 py-0.5 rounded-md font-semibold">Kilat</span>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <!-- Custom Thousand Separator Input -->
+                                    <div x-data="{
+                                        raw: @entangle('priceSuperExpress'),
+                                        display: '',
+                                        format(val) {
+                                            if (!val) return '';
+                                            let clean = val.toString().replace(/[^0-9]/g, '');
+                                            return clean.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                                        },
+                                        updateRaw(val) {
+                                            let clean = val.replace(/[^0-9]/g, '');
+                                            this.raw = clean ? parseInt(clean) : 0;
+                                            this.display = this.format(this.raw);
+                                        }
+                                    }" x-init="display = format(raw); $watch('raw', v => display = format(v))">
+                                        <label class="block text-[11px] font-bold text-[#4A5568]">Harga (Rp)</label>
+                                        <div class="relative mt-1 rounded-xl shadow-xs">
+                                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                                <span class="text-xs font-semibold text-slate-400">Rp</span>
+                                            </div>
+                                            <input type="text" x-model="display" @input="updateRaw($event.target.value)" 
+                                                class="w-full pl-8 pr-3 py-2 border border-purple-200/40 bg-white text-[#1A1D23] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-[#4A5568]">Min. Order ({{ $unit }})</label>
+                                        <input wire:model="minWeightSuperExpress" type="number" step="0.1" class="w-full mt-1 px-3 py-2 border border-purple-200/40 bg-white text-[#1A1D23] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all">
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Express Pricing -->
-                        <div class="p-3 bg-blue-50/30 border border-blue-100 rounded-xl space-y-2">
-                            <span class="text-[10px] font-bold text-blue-700 uppercase tracking-wide">2. Tarif Express</span>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block text-[10px] text-blue-500/80">Harga (Rp)</label>
-                                    <input wire:model="priceExpress" type="number" class="w-full mt-0.5 px-3 py-1.5 border border-blue-200/50 bg-white text-[#1A1D23] rounded-lg text-xs focus:outline-none focus:border-blue-500">
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] text-blue-500/80">Min. Order ({{ $unit }})</label>
-                                    <input wire:model="minWeightExpress" type="number" step="0.1" class="w-full mt-0.5 px-3 py-1.5 border border-blue-200/50 bg-white text-[#1A1D23] rounded-lg text-xs focus:outline-none focus:border-blue-500">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Super Express Pricing -->
-                        <div class="p-3 bg-purple-50/30 border border-purple-100 rounded-xl space-y-2">
-                            <span class="text-[10px] font-bold text-purple-700 uppercase tracking-wide">3. Tarif Super Express</span>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block text-[10px] text-purple-500/80">Harga (Rp)</label>
-                                    <input wire:model="priceSuperExpress" type="number" class="w-full mt-0.5 px-3 py-1.5 border border-purple-200/50 bg-white text-[#1A1D23] rounded-lg text-xs focus:outline-none focus:border-purple-500">
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] text-purple-500/80">Min. Order ({{ $unit }})</label>
-                                    <input wire:model="minWeightSuperExpress" type="number" step="0.1" class="w-full mt-0.5 px-3 py-1.5 border border-purple-200/50 bg-white text-[#1A1D23] rounded-lg text-xs focus:outline-none focus:border-purple-500">
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
-                <div class="flex justify-end space-x-3 border-t border-[#E2E7EF] pt-4">
-                    <button wire:click="closeModal" class="px-4 py-2 border border-[#E2E7EF] text-[#4A5568] rounded-xl text-sm font-semibold hover:bg-[#F8F9FC] cursor-pointer">Batal</button>
-                    <button wire:click="save" class="px-5 py-2 bg-[#1E3A5F] hover:bg-[#2A5082] text-white rounded-xl text-sm font-bold shadow-lg shadow-[#1E3A5F]/10 cursor-pointer">Simpan Layanan</button>
+                <!-- Footer (Sticky bottom) -->
+                <div class="flex justify-end space-x-3 border-t border-[#E2E7EF] pt-4 shrink-0">
+                    <button wire:click="closeModal" class="px-5 py-2.5 border border-[#E2E7EF] text-[#4A5568] hover:text-[#1A1D23] rounded-xl text-sm font-semibold hover:bg-[#F8F9FC] cursor-pointer transition-all">Batal</button>
+                    <button wire:click="save" class="px-6 py-2.5 bg-gradient-to-r from-[#1E3A5F] to-[#2A5082] text-white rounded-xl text-sm font-bold shadow-lg shadow-[#1E3A5F]/20 hover:shadow-[#1E3A5F]/35 hover:scale-[1.01] transition-all cursor-pointer">Simpan Layanan</button>
                 </div>
+
             </div>
         </div>
     @endif
