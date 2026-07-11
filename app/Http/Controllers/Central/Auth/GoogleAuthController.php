@@ -43,6 +43,20 @@ class GoogleAuthController extends Controller
             ->orWhere('email', $googleUser->getEmail())
             ->first();
 
+        if (!$user) {
+            // Check if tenant exists with this email (user registered normally without Google first)
+            $tenant = Tenant::where('email', $googleUser->getEmail())->first();
+            if ($tenant) {
+                $user = CentralUser::create([
+                    'name' => $googleUser->getName() ?? $tenant->name,
+                    'email' => $googleUser->getEmail(),
+                    'google_id' => $googleUser->getId(),
+                    'role' => UserRole::ADMIN,
+                    'is_active' => true,
+                ]);
+            }
+        }
+
         if ($user) {
             // Update google_id if it wasn't set
             if (!$user->google_id) {
