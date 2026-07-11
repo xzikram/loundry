@@ -20,6 +20,7 @@ use App\Livewire\Tenant\Expenses\ExpensePage;
 use App\Livewire\Tenant\Staff\StaffPage;
 use App\Livewire\Tenant\Reports\ReportsPage;
 use App\Livewire\Tenant\Settings\SettingsPage;
+use App\Livewire\Tenant\Services\ServicesPage;
 
 // Controllers
 use App\Http\Controllers\Tenant\TrackingController;
@@ -68,6 +69,7 @@ if (app()->runningInConsole() || !$isCentral) {
 
             // Management
             Route::get('/customers', CustomerListPage::class)->name('tenant.customers')->middleware('can:manage-customers');
+            Route::get('/services', ServicesPage::class)->name('tenant.services')->middleware('can:manage-outlet-settings');
             Route::get('/inventory', InventoryPage::class)->name('tenant.inventory')->middleware('can:view-inventory');
             Route::get('/expenses', ExpensePage::class)->name('tenant.expenses')->middleware('can:manage-expenses');
             Route::get('/staff', StaffPage::class)->name('tenant.staff')->middleware('can:manage-staff');

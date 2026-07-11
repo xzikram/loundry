@@ -27,6 +27,11 @@
     Pelanggan
 </a>
 
+<a href="{{ route('tenant.services') }}" class="group flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('tenant.services*') ? 'bg-gradient-to-r from-[#D4A853]/20 to-[#10B981]/10 text-[#E8C97A] border border-[#D4A853]/20 shadow-sm shadow-[#D4A853]/5' : 'text-slate-300 hover:bg-white/5 hover:text-white border border-transparent' }}">
+    <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.services*') ? 'text-[#D4A853]' : 'text-slate-500 group-hover:text-[#D4A853]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+    Layanan & Harga
+</a>
+
 <a href="{{ route('tenant.inventory') }}" class="group flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('tenant.inventory*') ? 'bg-gradient-to-r from-[#D4A853]/20 to-[#10B981]/10 text-[#E8C97A] border border-[#D4A853]/20 shadow-sm shadow-[#D4A853]/5' : 'text-slate-300 hover:bg-white/5 hover:text-white border border-transparent' }}">
     <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tenant.inventory*') ? 'text-[#D4A853]' : 'text-slate-500 group-hover:text-[#D4A853]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
     Inventaris
