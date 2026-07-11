@@ -64,6 +64,7 @@ if (app()->runningInConsole() || !$isCentral) {
             Route::get('/orders', OrderListPage::class)->name('tenant.orders')->middleware('can:view-orders');
             Route::get('/orders/{id}', OrderDetailPage::class)->name('tenant.order-details')->middleware('can:view-orders');
             Route::get('/orders/{id}/print', PrintPreviewPage::class)->name('tenant.orders.print')->middleware('can:view-orders');
+            Route::get('/profile', \App\Livewire\Tenant\Profile\ProfilePage::class)->name('tenant.profile');
 
             // Management
             Route::get('/customers', CustomerListPage::class)->name('tenant.customers')->middleware('can:manage-customers');

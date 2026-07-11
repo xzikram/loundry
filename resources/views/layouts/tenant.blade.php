@@ -89,7 +89,7 @@
                             </div>
                         </button>
                         <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-48 rounded-xl bg-white border border-[#E2E7EF] shadow-2xl py-1 text-sm text-[#4A5568] z-50">
-                            <a href="#" class="block px-4 py-2.5 hover:bg-[#F8F9FC] hover:text-[#1A1D23] transition-colors font-medium">Profil Saya</a>
+                            <a href="{{ route('tenant.profile') }}" class="block px-4 py-2.5 hover:bg-[#F8F9FC] hover:text-[#1A1D23] transition-colors font-medium">Profil Saya</a>
                             <hr class="border-[#E2E7EF] my-1">
                             <a href="#" class="block px-4 py-2.5 hover:bg-rose-50 text-rose-500 font-semibold transition-colors" onclick="document.getElementById('logout-form').submit();">Keluar</a>
                             <form id="logout-form" action="{{ route('tenant.logout') }}" method="POST" class="hidden">@csrf</form>
