@@ -13,7 +13,7 @@ class DefaultSettingsSeeder extends Seeder
         // Default settings
         $settings = [
             // General settings
-            ['key' => 'laundry_name', 'value' => 'KLIIN Laundry', 'group' => 'general', 'type' => 'string'],
+            ['key' => 'laundry_name', 'value' => 'Spinly Laundry', 'group' => 'general', 'type' => 'string'],
             ['key' => 'currency', 'value' => 'IDR', 'group' => 'general', 'type' => 'string'],
             ['key' => 'currency_symbol', 'value' => 'Rp', 'group' => 'general', 'type' => 'string'],
             
@@ -36,7 +36,7 @@ class DefaultSettingsSeeder extends Seeder
         // Default receipt template
         ReceiptTemplate::create([
             'name' => 'Standard Thermal Receipt',
-            'header' => "KLIIN\nPremium Laundry Management\n--------------------------",
+            'header' => "Spinly\nPremium Laundry Management\n--------------------------",
             'footer' => "Thank you for washing with us!\nPlease check your laundry before leaving.\nAll claims must be made within 24 hours.",
             'layout' => [
                 'show_logo' => false,

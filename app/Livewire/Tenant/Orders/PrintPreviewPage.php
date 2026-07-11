@@ -49,7 +49,7 @@ class PrintPreviewPage extends Component
                 @if($template && $template->header)
                     <pre class="font-mono whitespace-pre-wrap text-center leading-snug">{{ $template->header }}</pre>
                 @else
-                    <h3 class="text-base uppercase tracking-wider">KLIIN</h3>
+                    <h3 class="text-base uppercase tracking-wider">Spinly</h3>
                     <p class="font-normal text-[10px]">Premium Laundry Management</p>
                 @endif
             </div>

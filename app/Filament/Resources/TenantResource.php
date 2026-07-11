@@ -48,7 +48,7 @@ class TenantResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true)
-                    ->helperText('Used for routing URL (e.g. slug.kliin.id)'),
+                    ->helperText('Used for routing URL (e.g. slug.spinly.id)'),
                 TextInput::make('email')
                     ->email()
                     ->required()

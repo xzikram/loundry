@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lacak Cucian - {{ $order->invoice_number }} | KLIIN</title>
+    <title>Lacak Cucian - {{ $order->invoice_number }} | Spinly</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,10 +40,13 @@
             <div class="max-w-md mx-auto flex flex-col items-center text-center space-y-4 relative z-10">
                 <!-- Brand logo -->
                 <div class="flex items-center space-x-2.5">
-                    <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-[#D4A853] via-[#E8C97A] to-[#10B981] flex items-center justify-center shadow-lg shadow-[#D4A853]/25">
-                        <svg class="h-4.5 w-4.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-[#D4A853] via-[#E8C97A] to-[#10B981] flex items-center justify-center shadow-lg shadow-[#D4A853]/25 shrink-0">
+                        <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" d="M12 3a9 9 0 1 0 9 9c0-2-1.5-3.5-3-3s-3 1.5-3 3a3 3 0 1 1-6 0c0-1.5 1.2-3 3-3" />
+                            <path d="M12 10.5l.3.7.7.3-.7.3-.3.7-.3-.7-.7-.3.7-.3z" fill="currentColor"/>
+                        </svg>
                     </div>
-                    <span class="text-2xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-[#D4A853] to-[#E8C97A]">KLIIN</span>
+                    <span class="text-2xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-[#D4A853] to-[#E8C97A]">Spinly</span>
                 </div>
                 
                 <div class="space-y-1">
@@ -185,7 +188,7 @@
                         $outletPhoneClean = '62' . $outletPhoneClean;
                     }
                     $waOutletUrl = $outletPhoneClean ? "https://wa.me/" . $outletPhoneClean . "?text=" . urlencode("Halo, saya ingin bertanya tentang status cucian saya dengan nomor invoice " . $order->invoice_number) : "#";
-                    $laundryName = \App\Models\Tenant\Setting::getValue('laundry_name', tenant('name') ?? 'KLIIN Laundry');
+                    $laundryName = \App\Models\Tenant\Setting::getValue('laundry_name', tenant('name') ?? 'Spinly Laundry');
                 @endphp
                 <div class="bg-white border border-[#E2E7EF] rounded-2xl shadow-xl shadow-slate-200/50 p-6 space-y-4 text-center">
                     <div class="mx-auto h-12 w-12 rounded-full bg-[#1E3A5F]/5 text-[#1E3A5F] flex items-center justify-center font-bold text-lg">

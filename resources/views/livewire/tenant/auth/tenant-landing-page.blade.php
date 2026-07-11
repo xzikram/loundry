@@ -180,7 +180,7 @@
                     </div>
                     <span class="text-xs font-bold text-[#1E3A5F]">{{ $laundryName }}</span>
                 </div>
-                <p class="text-xs text-[#8896A6]">&copy; 2026 {{ $laundryName }}. Powered by KLIIN.</p>
+                <p class="text-xs text-[#8896A6]">&copy; 2026 {{ $laundryName }}. Powered by Spinly.</p>
             </div>
         </footer>
     </div>

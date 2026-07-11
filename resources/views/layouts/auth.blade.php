@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ tenancy()->initialized ? \App\Models\Tenant\Setting::getValue('laundry_name', 'KLIIN') : 'KLIIN' }} - Sign In</title>
+    <title>{{ tenancy()->initialized ? \App\Models\Tenant\Setting::getValue('laundry_name', 'Spinly') : 'Spinly' }} - Sign In</title>
     <link rel="icon" type="image/png" href="https://img.icons8.com/color/192/000000/washing-machine.png">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#0F1A2E">
@@ -78,7 +78,7 @@
         <!-- Footer -->
         <div class="relative z-10 mt-10 text-center animate-fade-in-up-delay">
             <p class="text-[11px] text-white/20 font-medium tracking-wide">
-                &copy; {{ date('Y') }} KLIIN &mdash; Platform Manajemen Laundry Pintar
+                &copy; {{ date('Y') }} Spinly &mdash; Platform Manajemen Laundry Pintar
             </p>
         </div>
     </div>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ tenancy()->initialized ? \App\Models\Tenant\Setting::getValue('laundry_name', 'KLIIN') : 'KLIIN' }} - Portal</title>
+    <title>{{ tenancy()->initialized ? \App\Models\Tenant\Setting::getValue('laundry_name', 'Spinly') : 'Spinly' }} - Portal</title>
     <link rel="icon" type="image/png" href="https://img.icons8.com/color/192/000000/washing-machine.png">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#1E3A5F">
@@ -35,7 +35,15 @@
                x-transition:leave="transition ease-in duration-200" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full"
                class="fixed inset-y-0 left-0 z-50 w-64 flex flex-col bg-gradient-to-b from-[#0F1A2E] via-[#162240] to-[#1A2D4A] border-r border-[#1E3A5F]/30 shadow-2xl md:hidden" style="display:none">
             <div class="flex items-center justify-between h-16 px-6 border-b border-white/5">
-                <span class="text-lg font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-[#D4A853] to-[#E8C97A]">KLIIN</span>
+                <div class="flex items-center space-x-2.5">
+                    <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-[#D4A853] via-[#E8C97A] to-[#10B981] flex items-center justify-center shadow-lg shadow-[#D4A853]/25 shrink-0">
+                        <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" d="M12 3a9 9 0 1 0 9 9c0-2-1.5-3.5-3-3s-3 1.5-3 3a3 3 0 1 1-6 0c0-1.5 1.2-3 3-3" />
+                            <path d="M12 10.5l.3.7.7.3-.7.3-.3.7-.3-.7-.7-.3.7-.3z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <span class="text-lg font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-[#D4A853] to-[#E8C97A]">Spinly</span>
+                </div>
                 <button @click="sidebarOpen = false" class="text-slate-400 hover:text-white">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
@@ -50,7 +58,7 @@
                         <svg class="h-4.5 w-4.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold text-white">Instal KLIIN App</h4>
+                        <h4 class="text-xs font-bold text-white">Instal Spinly App</h4>
                         <p class="text-[10px] text-slate-400">Akses cepat dari Home Screen</p>
                     </div>
                 </div>
@@ -65,10 +73,13 @@
             <div class="flex-1 flex flex-col min-h-0">
                 <div class="flex items-center h-16 flex-shrink-0 px-6 border-b border-white/5">
                     <div class="flex items-center space-x-2.5">
-                        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-[#D4A853] via-[#E8C97A] to-[#10B981] flex items-center justify-center shadow-lg shadow-[#D4A853]/20">
-                            <svg class="h-4.5 w-4.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-[#D4A853] via-[#E8C97A] to-[#10B981] flex items-center justify-center shadow-lg shadow-[#D4A853]/25 shrink-0">
+                            <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" d="M12 3a9 9 0 1 0 9 9c0-2-1.5-3.5-3-3s-3 1.5-3 3a3 3 0 1 1-6 0c0-1.5 1.2-3 3-3" />
+                                <path d="M12 10.5l.3.7.7.3-.7.3-.3.7-.3-.7-.7-.3.7-.3z" fill="currentColor"/>
+                            </svg>
                         </div>
-                        <span class="text-lg font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-[#D4A853] to-[#E8C97A]">KLIIN</span>
+                        <span class="text-lg font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-[#D4A853] to-[#E8C97A]">Spinly</span>
                     </div>
                 </div>
                 <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
@@ -81,7 +92,7 @@
                             <svg class="h-4.5 w-4.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                         </div>
                         <div>
-                            <h4 class="text-xs font-bold text-white">Instal KLIIN App</h4>
+                            <h4 class="text-xs font-bold text-white">Instal Spinly App</h4>
                             <p class="text-[10px] text-slate-400">Akses cepat dari Home Screen</p>
                         </div>
                     </div>
@@ -183,7 +194,7 @@
                 <svg style="height:20px;width:20px;color:white;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
             </div>
             <div>
-                <h4 class="text-xs font-extrabold text-white">Aplikasi KLIIN</h4>
+                <h4 class="text-xs font-extrabold text-white">Aplikasi Spinly</h4>
                 <p class="text-[10px] text-slate-400">Instal untuk akses lebih cepat</p>
             </div>
         </div>
@@ -211,7 +222,7 @@
             </div>
 
             <div class="space-y-4 text-[#4A5568] text-xs leading-relaxed">
-                <p class="text-center font-bold text-[#1E3A5F]">Aplikasi KLIIN siap ditambahkan ke layar utama perangkat iOS Anda!</p>
+                <p class="text-center font-bold text-[#1E3A5F]">Aplikasi Spinly siap ditambahkan ke layar utama perangkat iOS Anda!</p>
                 
                 <div class="space-y-3.5 pt-2">
                     <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-2xl border border-slate-100">

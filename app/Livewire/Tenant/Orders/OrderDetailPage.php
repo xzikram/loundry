@@ -110,7 +110,7 @@ class OrderDetailPage extends Component
         };
 
         $paymentStatusLabel = $this->order->payment_status === 'paid' ? 'LUNAS' : 'BELUM LUNAS';
-        $laundryName = \App\Models\Tenant\Setting::getValue('laundry_name', tenant('name') ?? 'KLIIN Laundry');
+        $laundryName = \App\Models\Tenant\Setting::getValue('laundry_name', tenant('name') ?? 'Spinly Laundry');
 
         $message = "Halo *" . ($this->order->customer->name ?? 'Pelanggan') . "*,\n\n"
                  . "Cucian Anda di *" . $laundryName . "* dengan nomor invoice *" . $this->order->invoice_number . "* saat ini *" . $statusLabel . "*! 🎉\n\n"

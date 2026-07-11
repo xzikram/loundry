@@ -43,7 +43,7 @@ class TenantLandingPage extends Component
                 ->get();
             $this->theme = \App\Models\Tenant\LandingThemeSetting::getSettings();
         } else {
-            $this->laundryName = Setting::getValue('laundry_name', 'KLIIN Laundry');
+            $this->laundryName = Setting::getValue('laundry_name', 'Spinly Laundry');
             $this->laundryPhone = Setting::getValue('laundry_phone', '');
             $this->laundryAddress = Setting::getValue('laundry_address', '');
             $this->laundryEmail = Setting::getValue('laundry_email', '');

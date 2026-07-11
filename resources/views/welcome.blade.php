@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KLIIN — Smart Laundry Management Platform</title>
+    <title>Spinly — Smart Laundry Management Platform</title>
     <meta name="description" content="Platform manajemen laundry cerdas dengan POS, IoT, AI, dan WhatsApp Bot otomatis untuk UMKM laundry Indonesia.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,10 +31,13 @@
     <nav class="border-b border-white/10 bg-[#0F1A2E]/90 backdrop-blur-xl fixed top-0 left-0 right-0 z-50">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-2.5">
-                <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-[#D4A853] via-[#E8C97A] to-[#10B981] flex items-center justify-center shadow-lg shadow-[#D4A853]/20">
-                    <svg class="h-4.5 w-4.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-[#D4A853] via-[#E8C97A] to-[#10B981] flex items-center justify-center shadow-lg shadow-[#D4A853]/25 shrink-0">
+                    <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" d="M12 3a9 9 0 1 0 9 9c0-2-1.5-3.5-3-3s-3 1.5-3 3a3 3 0 1 1-6 0c0-1.5 1.2-3 3-3" />
+                        <path d="M12 10.5l.3.7.7.3-.7.3-.3.7-.3-.7-.7-.3.7-.3z" fill="currentColor"/>
+                    </svg>
                 </div>
-                <span class="text-lg font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-[#D4A853] to-[#E8C97A]">KLIIN</span>
+                <span class="text-lg font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-[#D4A853] to-[#E8C97A]">Spinly</span>
             </div>
             <div class="flex items-center space-x-6">
                 <a href="#features" class="text-sm text-slate-300 hover:text-[#D4A853] transition-colors hidden sm:block font-medium">Fitur</a>
@@ -103,7 +106,7 @@
                 <div class="relative">
                     <!-- Glow behind image -->
                     <div class="absolute -inset-8 bg-gradient-to-t from-[#D4A853]/20 via-[#10B981]/10 to-transparent rounded-full blur-3xl"></div>
-                    <img src="/images/brand/hero.png" alt="KLIIN Brand Ambassador" class="relative z-10 h-[520px] w-auto object-contain drop-shadow-2xl">
+                    <img src="/images/brand/hero.png" alt="Spinly Brand Ambassador" class="relative z-10 h-[520px] w-auto object-contain drop-shadow-2xl">
                     
                     <!-- Floating glass card -->
                     <div class="absolute top-12 -left-16 glass rounded-2xl px-5 py-4 animate-float z-20 shadow-xl">
@@ -195,7 +198,7 @@
                 <div class="lg:col-span-1 hidden lg:flex justify-center">
                     <div class="relative">
                         <div class="absolute -inset-4 bg-gradient-to-b from-[#D4A853]/15 to-[#10B981]/15 rounded-full blur-2xl"></div>
-                        <img src="/images/brand/features.png" alt="KLIIN Features" class="relative z-10 h-[380px] w-auto object-contain rounded-2xl">
+                        <img src="/images/brand/features.png" alt="Spinly Features" class="relative z-10 h-[380px] w-auto object-contain rounded-2xl">
                     </div>
                 </div>
 
@@ -254,7 +257,7 @@
             <div class="flex justify-center">
                 <div class="relative">
                     <div class="absolute -inset-6 bg-gradient-to-br from-[#D4A853]/15 to-[#10B981]/15 rounded-3xl blur-2xl"></div>
-                    <img src="/images/brand/testimonial.png" alt="KLIIN Trusted by Business" class="relative z-10 h-[350px] w-auto object-contain rounded-2xl shadow-2xl">
+                    <img src="/images/brand/testimonial.png" alt="Spinly Trusted by Business" class="relative z-10 h-[350px] w-auto object-contain rounded-2xl shadow-2xl">
                 </div>
             </div>
             <div class="space-y-8">
@@ -263,7 +266,7 @@
                     Bergabung dengan <span class="text-[#D4A853]">500+</span> pemilik laundry yang sudah <span class="text-[#10B981]">mengoptimalkan</span> bisnisnya
                 </h2>
                 <p class="text-sm text-slate-300 leading-relaxed font-medium">
-                    "KLIIN mengubah cara kami mengelola operasional. Dari yang sebelumnya kacau dengan pencatatan manual, sekarang semua otomatis dan transparan. Omzet naik 35% dalam 3 bulan pertama."
+                    "Spinly mengubah cara kami mengelola operasional. Dari yang sebelumnya kacau dengan pencatatan manual, sekarang semua otomatis dan transparan. Omzet naik 35% dalam 3 bulan pertama."
                 </p>
                 <div class="flex items-center space-x-4">
                     <div class="h-12 w-12 rounded-full bg-gradient-to-br from-[#D4A853] to-[#10B981] flex items-center justify-center text-white font-black text-lg shadow-lg">A</div>
@@ -362,12 +365,15 @@
     <footer class="border-t border-[#E2E7EF] bg-[#0F1A2E] py-12">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div class="flex items-center space-x-2.5">
-                <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-[#D4A853] to-[#10B981] flex items-center justify-center">
-                    <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-[#D4A853] via-[#E8C97A] to-[#10B981] flex items-center justify-center shadow-lg shadow-[#D4A853]/25 shrink-0">
+                    <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" d="M12 3a9 9 0 1 0 9 9c0-2-1.5-3.5-3-3s-3 1.5-3 3a3 3 0 1 1-6 0c0-1.5 1.2-3 3-3" />
+                        <path d="M12 10.5l.3.7.7.3-.7.3-.3.7-.3-.7-.7-.3.7-.3z" fill="currentColor"/>
+                    </svg>
                 </div>
-                <span class="text-sm font-black bg-clip-text text-transparent bg-gradient-to-r from-[#D4A853] to-[#E8C97A]">KLIIN</span>
+                <span class="text-sm font-black bg-clip-text text-transparent bg-gradient-to-r from-[#D4A853] to-[#E8C97A]">Spinly</span>
             </div>
-            <p class="text-xs text-slate-400 font-medium">&copy; 2026 KLIIN. All rights reserved.</p>
+            <p class="text-xs text-slate-400 font-medium">&copy; 2026 Spinly. All rights reserved.</p>
         </div>
     </footer>
 

@@ -31,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('KLIIN Admin')
+            ->brandName('Spinly Admin')
             ->font('Outfit')
             ->brandLogo(fn () => view('filament.brand-logo'))
             ->favicon('https://img.icons8.com/color/192/000000/washing-machine.png')
@@ -96,7 +96,7 @@ class AdminPanelProvider extends PanelProvider
             PanelsRenderHook::HEAD_END,
             fn (): HtmlString => new HtmlString('
                 <style>
-                    /* Custom premium styling for KLIIN Filament Admin */
+                    /* Custom premium styling for Spinly Filament Admin */
                     .fi-sidebar {
                         background: linear-gradient(180deg, #0F1A2E 0%, #131d31 50%, #17263e 100%) !important;
                         border-right: 1px solid rgba(212, 168, 83, 0.15) !important;
