@@ -104,6 +104,11 @@ class CentralLoginPage extends Component
 
             <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div class="bg-white py-8 px-4 border border-[#E2E7EF] shadow-xl shadow-[#1E3A5F]/5 sm:rounded-2xl sm:px-10">
+                    @if(session()->has('error'))
+                        <div class="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-100 text-xs font-semibold text-rose-600">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     <form wire:submit.prevent="login" class="space-y-6">
                         <div>
                             <label for="email" class="block text-sm font-medium text-[#4A5568]">Email</label>

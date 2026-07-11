@@ -54,6 +54,9 @@ class LoginPage extends Component
                         ],
                     ]);
 
+                    // Flash success message
+                    session()->flash('success', 'Login berhasil! Selamat datang kembali, ' . $tenantUser->name . '.');
+
                     return redirect()->intended(route('tenant.dashboard'));
                 }
             }
@@ -92,6 +95,9 @@ class LoginPage extends Component
                     'user_agent' => request()->userAgent(),
                 ],
             ]);
+
+            // Flash success message
+            session()->flash('success', 'Login berhasil! Selamat datang kembali.');
 
             return redirect()->intended(route('tenant.dashboard'));
         }
