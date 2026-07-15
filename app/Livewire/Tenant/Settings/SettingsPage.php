@@ -16,6 +16,8 @@ class SettingsPage extends Component
     public string $laundryEmail = '';
     public float $taxRate = 11;
     public string $currency = 'IDR';
+    public string $pakasirProjectSlug = '';
+    public string $pakasirApiKey = '';
     public bool $saved = false;
 
     public function mount()
@@ -26,6 +28,8 @@ class SettingsPage extends Component
         $this->laundryEmail = Setting::getValue('laundry_email', '');
         $this->taxRate = (float) Setting::getValue('tax_rate', 11);
         $this->currency = Setting::getValue('currency', 'IDR');
+        $this->pakasirProjectSlug = Setting::getValue('pakasir_project_slug', '');
+        $this->pakasirApiKey = Setting::getValue('pakasir_api_key', '');
     }
 
     public function save()
@@ -37,6 +41,8 @@ class SettingsPage extends Component
             'laundryEmail' => 'nullable|email|max:255',
             'taxRate' => 'required|numeric|min:0|max:100',
             'currency' => 'required|string|size:3',
+            'pakasirProjectSlug' => 'nullable|string|max:255',
+            'pakasirApiKey' => 'nullable|string|max:255',
         ]);
 
         Setting::setValue('laundry_name', $this->laundryName);
@@ -45,6 +51,8 @@ class SettingsPage extends Component
         Setting::setValue('laundry_email', $this->laundryEmail);
         Setting::setValue('tax_rate', $this->taxRate);
         Setting::setValue('currency', $this->currency);
+        Setting::setValue('pakasir_project_slug', $this->pakasirProjectSlug);
+        Setting::setValue('pakasir_api_key', $this->pakasirApiKey);
 
         $this->saved = true;
     }

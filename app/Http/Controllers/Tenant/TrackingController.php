@@ -16,7 +16,8 @@ class TrackingController extends Controller
                 ->first();
 
             if ($order) {
-                return view('tracking.show', compact('order'));
+                $pakasirProjectSlug = \App\Models\Tenant\Setting::getValue('pakasir_project_slug');
+                return view('tracking.show', compact('order', 'pakasirProjectSlug'));
             }
 
             return redirect()->back()->with('error', 'Invoice "' . $invoiceNumber . '" tidak ditemukan.');
@@ -35,6 +36,7 @@ class TrackingController extends Controller
             return redirect()->route('tenant.landing')->with('error', 'Invoice "' . $invoiceNumber . '" tidak ditemukan.');
         }
 
-        return view('tracking.show', compact('order'));
+        $pakasirProjectSlug = \App\Models\Tenant\Setting::getValue('pakasir_project_slug');
+        return view('tracking.show', compact('order', 'pakasirProjectSlug'));
     }
 }

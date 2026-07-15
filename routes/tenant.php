@@ -35,7 +35,7 @@ $host = request()->getHost();
 $centralDomains = config('tenancy.central_domains', ['127.0.0.1', 'localhost', 'laundrypromax.test']);
 $isCentral = in_array($host, $centralDomains);
 
-if (app()->runningInConsole() || !$isCentral) {
+if ((app()->runningInConsole() && !app()->runningUnitTests()) || !$isCentral) {
     Route::middleware([
         'web',
         InitializeTenancyByDomain::class,
@@ -48,6 +48,10 @@ if (app()->runningInConsole() || !$isCentral) {
         // Public Tracking Routes
         Route::get('/track', [TrackingController::class, 'index'])->name('tenant.track.index');
         Route::get('/track/{invoice_number}', [TrackingController::class, 'show'])->name('tenant.track');
+
+        // Pakasir Webhook Route
+        Route::post('/webhook/pakasir', [App\Http\Controllers\Tenant\PakasirWebhookController::class, 'handle'])
+            ->name('tenant.webhook.pakasir');
 
         Route::middleware('guest:tenant')->group(function () {
             Route::get('/login', LoginPage::class)->name('login');

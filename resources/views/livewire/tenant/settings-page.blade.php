@@ -59,6 +59,26 @@
         </div>
     </div>
 
+    <!-- Pakasir Payment Gateway -->
+    <div class="bg-white border border-[#E2E7EF] rounded-2xl p-6 space-y-5">
+        <div class="border-b border-[#E2E7EF] pb-3">
+            <h3 class="text-lg font-bold text-[#1A1D23]">Integrasi Pembayaran Pakasir</h3>
+            <p class="text-xs text-[#8896A6]">Konfigurasi Project Slug dan API Key untuk menerima pembayaran digital via QRIS/VA otomatis.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+                <label class="block text-sm font-medium text-[#4A5568]">Pakasir Project Slug</label>
+                <input wire:model="pakasirProjectSlug" type="text" placeholder="Contoh: laundry-super" class="w-full mt-1 px-4 py-2.5 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] rounded-xl text-sm focus:outline-none focus:border-[#1E3A5F]">
+                @error('pakasirProjectSlug') <p class="text-xs text-rose-500 mt-1">{{ $message }}</p> @enderror
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-[#4A5568]">Pakasir API Key</label>
+                <input wire:model="pakasirApiKey" type="password" placeholder="pk_live_..." class="w-full mt-1 px-4 py-2.5 border border-[#E2E7EF] bg-[#F8F9FC] text-[#1A1D23] rounded-xl text-sm focus:outline-none focus:border-[#1E3A5F]">
+                @error('pakasirApiKey') <p class="text-xs text-rose-500 mt-1">{{ $message }}</p> @enderror
+            </div>
+        </div>
+    </div>
+
     <!-- Outlet Info (Read Only) -->
     @if($outlet)
     <div class="bg-white border border-[#E2E7EF] rounded-2xl p-6 space-y-3">

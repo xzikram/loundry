@@ -176,6 +176,39 @@
                     </div>
                 </div>
 
+                @if($order->payment_status !== 'paid' && !empty($pakasirProjectSlug))
+                    @php
+                        $amount = (int) ($order->total - $order->paid_amount);
+                        $redirectUrl = request()->fullUrl();
+                        $pakasirUrl = "https://app.pakasir.com/pay/{$pakasirProjectSlug}/{$amount}?order_id={$order->invoice_number}&redirect=" . urlencode($redirectUrl);
+                        $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" . urlencode($pakasirUrl);
+                    @endphp
+                    <!-- Pakasir Payment Card -->
+                    <div class="bg-white border border-[#E2E7EF] rounded-2xl shadow-xl shadow-slate-200/50 p-6 space-y-5">
+                        <div class="border-b border-[#E2E7EF] pb-3 text-center">
+                            <span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-indigo-50 text-[#1E3A5F] mb-2 text-lg">
+                                💳
+                            </span>
+                            <h3 class="text-sm font-bold text-[#1A1D23] uppercase tracking-wider">Bayar Sekarang via QRIS / VA</h3>
+                            <p class="text-xs text-[#8896A6] mt-1">Silakan scan QR Code di bawah menggunakan aplikasi e-wallet Anda atau klik tombol bayar untuk menyelesaikan pembayaran secara digital.</p>
+                        </div>
+                        
+                        <div class="flex flex-col items-center space-y-4">
+                            <div class="p-3 bg-white border border-[#E2E7EF] rounded-2xl shadow-sm">
+                                <img src="{{ $qrCodeUrl }}" alt="QR Code Pembayaran Pakasir" class="h-44 w-44 object-contain">
+                            </div>
+                            
+                            <a href="{{ $pakasirUrl }}" target="_blank"
+                               class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 shadow-lg shadow-indigo-600/10 transition-all cursor-pointer">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                </svg>
+                                Bayar Sekarang
+                            </a>
+                        </div>
+                    </div>
+                @endif
+
                 <!-- Laundry Contact Card -->
                 @php
                     $outlet = $order->outlet;

@@ -372,12 +372,14 @@ class PosBillingPage extends Component
 
     public function checkout(OrderRepositoryInterface $orderRepo)
     {
-        if ($this->paidAmount < 0) {
+        $isPakasir = ($this->paymentMethod === 'pakasir');
+
+        if (!$isPakasir && $this->paidAmount < 0) {
             $this->addError('payment', 'Jumlah bayar tidak valid.');
             return;
         }
 
-        if ($this->paidAmount < $this->getTotal() && $this->paymentMethod === 'cash') {
+        if (!$isPakasir && $this->paidAmount < $this->getTotal() && $this->paymentMethod === 'cash') {
             $this->addError('payment', 'Jumlah bayar kurang.');
             return;
         }
@@ -394,6 +396,10 @@ class PosBillingPage extends Component
 
         $outletId = Auth::guard('tenant')->user()->outlet_id;
 
+        $paidAmount = $isPakasir ? 0.00 : $this->paidAmount;
+        $changeAmount = $isPakasir ? 0.00 : $this->getChange();
+        $paymentStatus = $isPakasir ? 'unpaid' : ($paidAmount >= $this->getTotal() ? 'paid' : 'partial');
+
         // Build Order Data DTO
         $orderData = [
             'invoice_number' => $invoiceNumber,
@@ -405,9 +411,9 @@ class PosBillingPage extends Component
             'subtotal' => $this->getSubtotal(),
             'tax' => $this->getTax(),
             'total' => $this->getTotal(),
-            'paid_amount' => $this->paidAmount,
-            'change_amount' => $this->getChange(),
-            'payment_status' => $this->paidAmount >= $this->getTotal() ? 'paid' : 'partial',
+            'paid_amount' => $paidAmount,
+            'change_amount' => $changeAmount,
+            'payment_status' => $paymentStatus,
             'notes' => $this->notes,
             'special_instructions' => $this->specialInstructions,
             'estimated_completion' => now()->addHours(48), // Default duration representation
@@ -430,9 +436,9 @@ class PosBillingPage extends Component
         $order = $orderRepo->create($orderData, $itemsData);
 
         // Record Order Payment
-        if ($this->paidAmount > 0) {
+        if (!$isPakasir && $paidAmount > 0) {
             $order->payments()->create([
-                'amount' => $this->paidAmount > $this->getTotal() ? $this->getTotal() : $this->paidAmount,
+                'amount' => $paidAmount > $this->getTotal() ? $this->getTotal() : $paidAmount,
                 'method' => $this->paymentMethod,
                 'reference_number' => $this->referenceNumber,
                 'received_by' => Auth::guard('tenant')->id(),
@@ -729,6 +735,7 @@ class PosBillingPage extends Component
                                     <option value="cash">Tunai (Cash)</option>
                                     <option value="transfer">Bank Transfer</option>
                                     <option value="qris">QRIS (Mock)</option>
+                                    <option value="pakasir">Pakasir (QRIS / VA)</option>
                                 </select>
                             </div>
 
@@ -750,6 +757,14 @@ class PosBillingPage extends Component
                                         <div class="h-40 w-40 bg-[radial-gradient(#000_15%,transparent_16%),radial-gradient(#000_15%,transparent_16%)] bg-[length:16px_16px] bg-[position:0_0,8px_8px] border border-slate-300"></div>
                                     </div>
                                     <span class="text-xs text-[#8896A6]">Pindai QR di atas menggunakan dompet digital</span>
+                                </div>
+                            @elseif($paymentMethod === 'pakasir')
+                                <!-- Pakasir Information -->
+                                <div class="bg-indigo-50 border border-indigo-200 text-[#1E3A5F] p-4 rounded-xl text-xs space-y-2">
+                                    <p class="font-bold flex items-center gap-1.5 text-sm">
+                                        <span>🔗</span> Pakasir Payment Link / QRIS
+                                    </p>
+                                    <p class="leading-relaxed">Sistem akan membuat tagihan pembayaran digital otomatis menggunakan platform Pakasir. Kasir dapat membagikan link pembayaran atau menampilkan QR Code langsung dari halaman detail transaksi setelah order dibuat.</p>
                                 </div>
                             @else
                                 <div>

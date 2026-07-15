@@ -15,6 +15,8 @@ class OrderDetailPage extends Component
     public int $orderId;
     public ?Order $order = null;
     public string $rackLocation = '';
+    public string $pakasirUrl = '';
+    public string $qrCodeUrl = '';
 
     public function mount($id, OrderRepositoryInterface $orderRepo)
     {
@@ -26,6 +28,21 @@ class OrderDetailPage extends Component
         }
 
         $this->rackLocation = $this->order->rack_location ?? '';
+        $this->generatePakasirData();
+    }
+
+    public function generatePakasirData()
+    {
+        $slug = \App\Models\Tenant\Setting::getValue('pakasir_project_slug');
+        if ($slug && $this->order && $this->order->payment_status !== 'paid') {
+            $amount = (int) ($this->order->total - $this->order->paid_amount);
+            $redirectUrl = route('tenant.track', ['invoice_number' => $this->order->invoice_number]);
+            $this->pakasirUrl = "https://app.pakasir.com/pay/{$slug}/{$amount}?order_id={$this->order->invoice_number}&redirect=" . urlencode($redirectUrl);
+            $this->qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" . urlencode($this->pakasirUrl);
+        } else {
+            $this->pakasirUrl = '';
+            $this->qrCodeUrl = '';
+        }
     }
 
     public function progressStatus(OrderRepositoryInterface $orderRepo)
@@ -135,6 +152,68 @@ class OrderDetailPage extends Component
         session()->flash('wa_message', 'Tautan WhatsApp berhasil dibuat dan siap dikirim!');
     }
 
+    public function checkPakasirStatus()
+    {
+        $slug = \App\Models\Tenant\Setting::getValue('pakasir_project_slug');
+        $apiKey = \App\Models\Tenant\Setting::getValue('pakasir_api_key');
+
+        if (!$slug || !$apiKey) {
+            session()->flash('error', 'Gagal: Konfigurasi Pakasir belum lengkap. Silakan atur Project Slug dan API Key di menu Pengaturan.');
+            return;
+        }
+
+        try {
+            $amount = (int) $this->order->total;
+            $response = \Illuminate\Support\Facades\Http::timeout(10)->get('https://app.pakasir.com/api/transactiondetail', [
+                'project' => $slug,
+                'amount' => $amount,
+                'order_id' => $this->order->invoice_number,
+                'api_key' => $apiKey,
+            ]);
+
+            if ($response->failed()) {
+                session()->flash('error', 'Gagal menghubungi server Pakasir. Status HTTP: ' . $response->status());
+                return;
+            }
+
+            $data = $response->json();
+            $transaction = $data['transaction'] ?? null;
+
+            if ($transaction && isset($transaction['status']) && $transaction['status'] === 'completed') {
+                // Mark order as paid
+                $this->order->update([
+                    'paid_amount' => $this->order->total,
+                    'payment_status' => 'paid',
+                ]);
+
+                // Create OrderPayment record
+                $this->order->payments()->create([
+                    'amount' => $this->order->total,
+                    'method' => 'pakasir',
+                    'reference_number' => $transaction['payment_method'] ?? 'pakasir',
+                    'received_by' => Auth::guard('tenant')->id(),
+                    'paid_at' => now(),
+                ]);
+
+                // Re-fetch order
+                $this->order = Order::find($this->orderId);
+                $this->generatePakasirData();
+
+                // Log activity
+                \App\Models\Tenant\ActivityLog::create([
+                    'description' => 'Pembayaran order ' . $this->order->invoice_number . ' via Pakasir terverifikasi sukses.',
+                    'causer_id' => Auth::guard('tenant')->id(),
+                ]);
+
+                session()->flash('message', 'Pembayaran Pakasir terverifikasi sukses!');
+            } else {
+                session()->flash('error', 'Pembayaran belum diselesaikan atau tidak ditemukan di Pakasir.');
+            }
+        } catch (\Exception $e) {
+            session()->flash('error', 'Terjadi kesalahan saat memeriksa pembayaran: ' . $e->getMessage());
+        }
+    }
+
     public function render()
     {
         return <<<'HTML'
@@ -143,6 +222,11 @@ class OrderDetailPage extends Component
             @if(session()->has('message'))
                 <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 p-4 rounded-xl text-sm font-medium">
                     {{ session('message') }}
+                </div>
+            @endif
+            @if(session()->has('error'))
+                <div class="bg-rose-50 border border-rose-200 text-rose-700 p-4 rounded-xl text-sm font-medium">
+                    {{ session('error') }}
                 </div>
             @endif
             @if(session()->has('wa_message'))
@@ -223,6 +307,53 @@ class OrderDetailPage extends Component
                             </div>
                         </div>
                     </div>
+
+                    <!-- Pakasir Payment Card -->
+                    @if($this->order->payment_status !== 'paid' && \App\Models\Tenant\Setting::getValue('pakasir_project_slug'))
+                        <div class="bg-white border border-[#E2E7EF] rounded-2xl p-6 space-y-5">
+                            <div class="border-b border-[#E2E7EF] pb-3">
+                                <h3 class="text-md font-bold text-[#1A1D23] flex items-center gap-2">
+                                    <span class="p-1.5 rounded-lg bg-indigo-50 text-[#1E3A5F]">🔗</span>
+                                    <span>Pembayaran Pakasir Digital</span>
+                                </h3>
+                                <p class="text-xs text-[#8896A6]">Scan QRIS di bawah ini atau bagikan link pembayaran kepada pelanggan.</p>
+                            </div>
+                            
+                            <div class="flex flex-col md:flex-row items-center gap-6">
+                                @if($this->qrCodeUrl)
+                                    <div class="p-3 bg-white border border-[#E2E7EF] rounded-2xl shadow-sm">
+                                        <img src="{{ $this->qrCodeUrl }}" alt="QR Code Pakasir" class="h-44 w-44 object-contain">
+                                    </div>
+                                @endif
+                                <div class="flex-1 space-y-4 w-full">
+                                    <div class="space-y-1">
+                                        <p class="text-[10px] text-[#8896A6] uppercase tracking-wider font-semibold">Link Pembayaran</p>
+                                        <div class="flex items-center gap-2 bg-[#F8F9FC] border border-[#E2E7EF] rounded-xl p-2.5 text-xs text-[#1A1D23] select-all break-all">
+                                            <span class="flex-1 font-mono select-all">{{ $this->pakasirUrl }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <a href="{{ $this->pakasirUrl }}" target="_blank" class="px-4 py-2 bg-[#1E3A5F] hover:bg-[#2A5082] text-white rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 cursor-pointer">
+                                            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                            </svg>
+                                            Buka Link
+                                        </a>
+                                        <button wire:click="checkPakasirStatus" wire:loading.attr="disabled" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 cursor-pointer">
+                                            <svg wire:loading.remove class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 4.75L21.21 9M21 9H15m0 0l2.5 2.5"/>
+                                            </svg>
+                                            <svg wire:loading class="animate-spin h-3.5 w-3.5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            Cek Status
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
                     <!-- Payment Logs -->
                     <div class="bg-white border border-[#E2E7EF] rounded-2xl p-6 space-y-4">
